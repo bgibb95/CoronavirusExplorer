@@ -3,15 +3,9 @@
     <v-flex xs12 sm8 md6>
       <div class="text-center"></div>
       <v-card>
-        <v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
+        <v-card-title class="justify-center">Safety Tips</v-card-title>
         <v-card-text> </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
-
-<script>
-export default {
-  components: {}
-}
-</script>
