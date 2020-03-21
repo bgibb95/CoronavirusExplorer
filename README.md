@@ -1,0 +1,1 @@
+# NuxtCovid19Tracker
