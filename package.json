@@ -25,6 +25,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "js-base64": "^2.5.2",
     "nuxt": "^2.0.0",
     "vue-trend-chart": "^0.15.1"
   },

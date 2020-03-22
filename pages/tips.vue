@@ -43,7 +43,45 @@
             </v-btn>
           </div>
         </v-card-text>
+
+        <div class="image-container">
+          <img v-if="maskUsageImage" :src="maskUsageImage" alt="" />
+        </div>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState({
+      maskUsageImage: (state) => state.maskUsageImage
+    })
+  },
+  mounted() {
+    this.$store.dispatch('fetchRandomMaskUsageInstructions')
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.v-card {
+  //height: 100% !important;
+  display: inline-block;
+}
+.image-container {
+  max-width: 250px;
+  //background: yellow;
+  //height: 200px;
+  display: block;
+  margin: 20px auto;
+
+  img {
+    width: 100%;
+    border-radius: 4px;
+  }
+}
+</style>

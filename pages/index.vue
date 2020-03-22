@@ -1,10 +1,25 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
-    <h4 class="my-2">Total cases in South Africa</h4>
+    <v-row
+      ><v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
+      <v-autocomplete
+        v-if="affectedCountries"
+        v-model="selectedCountry"
+        :items="affectedCountries"
+        shaped
+        dense
+        filled
+        label="Search country"
+      ></v-autocomplete
+    ></v-row>
+
+    <h4 class="my-2">
+      Total cases in {{ selectedCountry }}
+      <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span>
+    </h4>
     <div class="chartContainer">
       <v-progress-circular
-        v-if="!totalCases.length > 0 || !dates.length > 0 || !showChart"
+        v-if="!totalCases.length > 0 || !dates.length > 0"
         class="center-loader"
         :size="45"
         :width="5"
@@ -12,7 +27,7 @@
         indeterminate
       ></v-progress-circular>
       <TrendChart
-        v-if="totalCases.length > 0 && dates.length > 0 && showChart"
+        v-if="totalCases.length > 0 && dates.length > 0"
         class="chart"
         :interactive="true"
         :datasets="[dataset]"
@@ -22,6 +37,7 @@
         }"
         :min="0"
         :labels="labels"
+        @mouse-move="onMouseMove"
       >
         <div v-for="date in dates" :key="date">
           {{ date }}
@@ -38,16 +54,43 @@ export default {
   components: {},
   data() {
     return {
-      showChart: false,
-      total_cases: []
+      // showChart: false,
+      total_cases: [],
+      selectedTotalCases: 0
+    }
+  },
+  watch: {
+    selectedCountry() {
+      this.$store.dispatch('fetchCasesByCountry')
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.showChart = true
-    }, 100)
+    // setTimeout(() => {
+    //   this.showChart = true
+    // }, 100)
+    // this.showChart = true
+  },
+  methods: {
+    numberWithSpaces(n) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+    },
+    onMouseMove(params) {
+      if (!params) {
+        this.selectedTotalCases = null
+        return
+      }
+      this.selectedTotalCases = this.numberWithSpaces(params.data[0])
+    }
   },
   computed: {
+    selectedCountry: {
+      get() {
+        return this.$store.state.selectedCountry
+      },
+      set(value) {
+        this.$store.commit('setSelectedCountry', value)
+      }
+    },
     labels() {
       return {
         xLabels: this.dates || ['11/11', '11/11', '11/11', '11/11', '11/11'],
@@ -56,15 +99,12 @@ export default {
       }
     },
     dates() {
-      return this.historyByCountry.map(
-        (history) =>
-          `${new Date(history.record_date).getDate()}/${new Date(
-            history.record_date
-          ).getMonth() + 1} `
-      )
+      return this.historyByCountry.map((history) => history.record_date)
     },
     totalCases() {
-      return this.historyByCountry.map((history) => Number(history.total_cases))
+      return this.historyByCountry.map((history) =>
+        Number(history.total_cases.replace(',', ''))
+      )
     },
     five() {
       return this.totalCases.filter((a, b) => this.totalCases.indexOf(a) === b)
@@ -84,7 +124,8 @@ export default {
       }
     },
     ...mapState({
-      historyByCountry: (state) => state.historyByCountry
+      historyByCountry: (state) => state.historyByCountry,
+      affectedCountries: (state) => state.affectedCountries
     })
   }
 }

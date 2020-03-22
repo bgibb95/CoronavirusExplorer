@@ -1,7 +1,8 @@
 <template>
   <v-app dark>
+    <div class="bg"></div>
     <v-content>
-      <v-container>
+      <v-container class="main-container">
         <nuxt />
       </v-container>
     </v-content>
@@ -15,11 +16,6 @@
         <span>Learn</span>
         <v-icon>mdi-safety-goggles</v-icon>
       </v-btn>
-
-      <!-- <v-btn value="nearby">
-        <span>Nearby</span>
-        <v-icon>mdi-map-marker</v-icon>
-      </v-btn> -->
     </v-bottom-navigation>
   </v-app>
 </template>
@@ -47,22 +43,8 @@ export default {
     //   .catch((err) => {
     //     console.log(err)
     //   })
-
-    this.$axios({
-      method: 'get',
-      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php?country=South%20Africa`,
-      headers: {
-        'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
-        'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
-      }
-    })
-      .then((res) => {
-        // console.log(res)
-        this.$store.commit('setHistoryByCountry', res.data.stat_by_country)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    this.$store.dispatch('fetchCasesByCountry')
+    this.$store.dispatch('fetchAffectedCountries')
   }
 }
 </script>
@@ -70,6 +52,20 @@ export default {
 <style lang="scss">
 html {
   overflow: auto;
+}
+.main-container {
+  padding-bottom: 80px;
+  //max-width: 95vw;
+}
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: opacity(0.1);
 }
 .v-bottom-navigation {
   a {
