@@ -7,7 +7,7 @@
           >Information and Safety Tips</v-card-title
         >
         <v-card-text>
-          <div class="my-2">
+          <div class="my-3">
             <v-btn
               :block="true"
               value="recent"
@@ -19,7 +19,7 @@
             </v-btn>
           </div>
 
-          <div class="my-2">
+          <div class="my-3">
             <v-btn
               :block="true"
               value="recent"
@@ -31,7 +31,7 @@
             </v-btn>
           </div>
 
-          <div class="my-2">
+          <div class="my-3">
             <v-btn
               :block="true"
               value="recent"
