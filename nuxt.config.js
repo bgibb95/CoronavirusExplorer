@@ -86,6 +86,7 @@ export default {
   pwa: {
     manifest: {
       name: 'COVID-19 Tracker',
+      short_name: 'COVID-19 Tracker',
       background_color: '#212121',
       description: 'A web app to track statistics of the Coronavirus'
     }
