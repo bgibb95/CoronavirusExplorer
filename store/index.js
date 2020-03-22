@@ -50,7 +50,7 @@ export const mutations = {
 
 export const actions = {
   fetchCasesByCountry(context) {
-    this.$axios({
+    return this.$axios({
       method: 'get',
       url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php?country=${encodeURI(
         context.state.selectedCountry

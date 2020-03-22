@@ -15,12 +15,15 @@
     </v-row>
 
     <h4 class="my-3">
-      Total cases in {{ selectedCountry }}
-      <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span>
+      <span v-if="!loading"
+        >Total cases in {{ selectedCountry }}
+        <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span></span
+      >
+      <span v-if="loading">Updating...</span>
     </h4>
     <div class="chartContainer">
       <v-progress-circular
-        v-if="!totalCases.length > 0 || !dates.length > 0"
+        v-if="!totalCases.length > 0 || !dates.length > 0 || loading"
         class="center-loader"
         :size="45"
         :width="5"
@@ -53,7 +56,8 @@ export default {
     return {
       // showChart: false,
       total_cases: [],
-      selectedTotalCases: 0
+      selectedTotalCases: 0,
+      loading: false
     }
   },
   watch: {
@@ -61,7 +65,10 @@ export default {
       if (this.selectedCountry) {
         document.querySelector('input').blur()
       }
-      this.$store.dispatch('fetchCasesByCountry')
+      this.loading = true
+      this.$store
+        .dispatch('fetchCasesByCountry')
+        .finally(() => (this.loading = false))
     }
   },
   mounted() {
