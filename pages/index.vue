@@ -133,7 +133,7 @@ export default {
 
 <style lang="scss">
 .v-text-field__details {
-  display: none;
+  display: none !important;
 }
 .center-loader {
   position: absolute;
