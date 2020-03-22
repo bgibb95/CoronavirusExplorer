@@ -24,9 +24,15 @@ export const mutations = {
       }
     })
 
-    if (historyByCountry.length > 10) {
+    if (historyByCountry.length > 6) {
       historyByCountry = historyByCountry.filter(
         (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
+      )
+    }
+
+    if (historyByCountry.length > 6) {
+      historyByCountry = historyByCountry.slice(
+        Math.max(historyByCountry.length - 6, 1)
       )
     }
     state.historyByCountry = historyByCountry

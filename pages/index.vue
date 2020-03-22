@@ -1,17 +1,18 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-row
-      ><v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
+    <v-row>
+      <v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
       <v-autocomplete
         v-if="affectedCountries"
         v-model="selectedCountry"
         :items="affectedCountries"
         shaped
         dense
+        :menu-props="{ maxHeight: 170 }"
         filled
         label="Search country"
-      ></v-autocomplete
-    ></v-row>
+      ></v-autocomplete>
+    </v-row>
 
     <h4 class="my-3">
       Total cases in {{ selectedCountry }}
@@ -38,11 +39,7 @@
         :min="0"
         :labels="labels"
         @mouse-move="onMouseMove"
-      >
-        <div v-for="date in dates" :key="date">
-          {{ date }}
-        </div>
-      </TrendChart>
+      ></TrendChart>
     </div>
   </v-layout>
 </template>
@@ -61,6 +58,9 @@ export default {
   },
   watch: {
     selectedCountry() {
+      if (this.selectedCountry) {
+        document.querySelector('input').blur()
+      }
       this.$store.dispatch('fetchCasesByCountry')
     }
   },

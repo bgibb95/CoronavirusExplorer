@@ -14,6 +14,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'theme-color', content: '#212121' },
       {
         hid: 'description',
         name: 'description',
@@ -80,6 +81,13 @@ export default {
           success: colors.green.accent3
         }
       }
+    }
+  },
+  pwa: {
+    manifest: {
+      name: 'COVID-19 Tracker',
+      background_color: '#212121',
+      description: 'A web app to track statistics of the Coronavirus'
     }
   },
   /*
