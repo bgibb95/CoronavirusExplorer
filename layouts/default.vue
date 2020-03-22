@@ -57,6 +57,16 @@ html {
 .main-container {
   padding-bottom: 65px;
   //max-width: 95vw;
+  opacity: 0;
+  animation: fade-in 0.6s ease 0.3s forwards 1;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .bg {
   position: fixed;
@@ -72,5 +82,17 @@ html {
   a {
     height: 100% !important;
   }
+}
+.page-enter {
+  opacity: 0;
+}
+
+.page-leave-active {
+  opacity: 0;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s cubic-bezier(0.89, 0.08, 0.69, 1);
 }
 </style>

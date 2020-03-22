@@ -3,7 +3,7 @@
     <v-row>
       <v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
       <v-autocomplete
-        v-if="affectedCountries"
+        v-if="affectedCountries.length > 0"
         v-model="selectedCountry"
         :items="affectedCountries"
         shaped
