@@ -93,6 +93,6 @@ html {
 
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.2s cubic-bezier(0.89, 0.08, 0.69, 1);
+  transition: all 0.19s ease;
 }
 </style>
