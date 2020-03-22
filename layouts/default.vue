@@ -45,6 +45,7 @@ export default {
     //   })
     this.$store.dispatch('fetchCasesByCountry')
     this.$store.dispatch('fetchAffectedCountries')
+    this.$store.dispatch('fetchRandomMaskUsageInstructions')
   }
 }
 </script>
@@ -54,7 +55,7 @@ html {
   overflow: auto;
 }
 .main-container {
-  padding-bottom: 80px;
+  padding-bottom: 65px;
   //max-width: 95vw;
 }
 .bg {

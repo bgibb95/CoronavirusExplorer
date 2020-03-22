@@ -26,7 +26,7 @@
               target=":blank"
               href="https://www.who.int/health-topics/coronavirus"
             >
-              <span>What is the Conronavirus?</span>
+              <span>What is the Coronavirus?</span>
               <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
             </v-btn>
           </div>
@@ -60,9 +60,6 @@ export default {
     ...mapState({
       maskUsageImage: (state) => state.maskUsageImage
     })
-  },
-  mounted() {
-    this.$store.dispatch('fetchRandomMaskUsageInstructions')
   }
 }
 </script>

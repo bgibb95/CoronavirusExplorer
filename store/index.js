@@ -95,9 +95,11 @@ export const actions = {
       .then((res) => {
         function blobToDataUrl(blob) {
           return new Promise((resolve) => {
-            const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
-            reader.onload = (e) => resolve(e.target.result)
-            reader.readAsDataURL(blob)
+            if (process.client) {
+              const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+              reader.onload = (e) => resolve(e.target.result)
+              reader.readAsDataURL(blob)
+            }
           })
         }
 
