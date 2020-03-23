@@ -38,7 +38,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/vue-trend-chart.js'],
+  plugins: [
+    '~/plugins/vue-trend-chart.js',
+    { src: '~/plugins/ga.js', mode: 'client' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
