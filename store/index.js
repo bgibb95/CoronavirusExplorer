@@ -18,9 +18,9 @@ export const mutations = {
     historyByCountry = historyByCountry.map((history) => {
       return {
         total_cases: history.total_cases,
-        record_date: `${new Date(history.record_date).getDate()}/${new Date(
-          history.record_date
-        ).getMonth() + 1} `
+        record_date: `${new Date(history.record_date.replace(/ /g, 'T')).getDate()}/${Number(
+          new Date(history.record_date.replace(/ /g, 'T')).getMonth()
+        ) + 1} `
       }
     })
 
@@ -31,9 +31,7 @@ export const mutations = {
     }
 
     if (historyByCountry.length > 6) {
-      historyByCountry = historyByCountry.slice(
-        Math.max(historyByCountry.length - 6, 1)
-      )
+      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - 6, 1))
     }
     state.historyByCountry = historyByCountry
   },
@@ -72,8 +70,7 @@ export const actions = {
   fetchAffectedCountries(context) {
     this.$axios({
       method: 'get',
-      url:
-        'https://coronavirus-monitor.p.rapidapi.com/coronavirus/affected.php',
+      url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/affected.php',
       headers: {
         'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
         'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY

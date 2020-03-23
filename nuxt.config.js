@@ -24,6 +24,11 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  server: {
+    port: 8000, // default: 3000
+    host: '10.0.0.102' // default: localhost
+  },
+
   router: {
     // base: process.env.NODE_ENV === 'development' ? '' : '/NuxtCovid19Tracker/'
   },
@@ -38,10 +43,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/vue-trend-chart.js',
-    { src: '~/plugins/ga.js', mode: 'client' }
-  ],
+  plugins: ['~/plugins/vue-trend-chart.js', { src: '~/plugins/ga.js', mode: 'client' }],
   /*
    ** Nuxt.js dev-modules
    */

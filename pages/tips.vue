@@ -3,9 +3,7 @@
     <v-flex xs12 sm8 md6>
       <div class="text-center"></div>
       <v-card>
-        <v-card-title class="justify-center"
-          >Information and Safety Tips</v-card-title
-        >
+        <v-card-title class="justify-center">Information and Safety Tips</v-card-title>
         <v-card-text>
           <div class="my-3">
             <v-btn

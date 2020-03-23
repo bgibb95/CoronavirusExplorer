@@ -15,10 +15,10 @@
     </v-row>
 
     <h4 class="my-3">
-      <span v-if="!loading"
-        >Total cases in {{ selectedCountry }}
-        <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span></span
-      >
+      <span v-if="!loading">
+        Total cases in {{ selectedCountry }}
+        <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span>
+      </span>
       <span v-if="loading">Updating...</span>
     </h4>
     <div class="chartContainer">
@@ -66,9 +66,7 @@ export default {
         document.querySelector('input').blur()
       }
       this.loading = true
-      this.$store
-        .dispatch('fetchCasesByCountry')
-        .finally(() => (this.loading = false))
+      this.$store.dispatch('fetchCasesByCountry').finally(() => (this.loading = false))
     }
   },
   mounted() {
@@ -109,9 +107,7 @@ export default {
       return this.historyByCountry.map((history) => history.record_date)
     },
     totalCases() {
-      return this.historyByCountry.map((history) =>
-        Number(history.total_cases.replace(',', ''))
-      )
+      return this.historyByCountry.map((history) => Number(history.total_cases.replace(',', '')))
     },
     five() {
       return this.totalCases.filter((a, b) => this.totalCases.indexOf(a) === b)
