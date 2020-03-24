@@ -54,6 +54,40 @@ export default {
 html {
   overflow: auto;
 }
+.label {
+  text {
+    fill: white;
+  }
+}
+.v-text-field__details {
+  display: none !important;
+}
+.active-line {
+  stroke: #42a5f5 !important;
+  stroke-width: 2;
+  opacity: 1;
+}
+text {
+  font-size: 14px !important;
+}
+.active-cases {
+  .stroke {
+    //stroke: #f44336;
+    stroke-width: 2;
+    //stroke: #ffffff;
+  }
+  .fill {
+    fill: #fff9f9;
+    opacity: 0.05;
+  }
+  .point {
+    fill: #ffffff;
+    //stroke: #ffffff;
+    // opacity: 0.9;
+    stroke-width: 2;
+    //stroke: #f44336;
+  }
+}
 .main-container {
   padding-bottom: 65px;
   //max-width: 95vw;

@@ -14,24 +14,40 @@
       ></v-autocomplete>
     </v-row>
 
-    <h4 class="my-3">
+    <h5 v-if="percentageChange" class="my-3">
       <span v-if="!loading">
-        Total cases in {{ selectedCountry }}
-        <span v-if="selectedTotalCases">: {{ selectedTotalCases }}</span>
+        <span :class="percentClass">{{ percentageChange }}% </span> over yesterday
+      </span>
+      <span v-if="loading">&nbsp;</span>
+    </h5>
+    <h4 class="active-cases">
+      <span v-if="!loading">
+        Active cases in {{ selectedCountry }}
+        <span v-if="selectedActiveCases"
+          >: <span class="blue--text text--lighten-1">{{ selectedActiveCases }}</span></span
+        >
       </span>
       <span v-if="loading">Updating...</span>
     </h4>
     <div class="chartContainer">
       <v-progress-circular
-        v-if="!totalCases.length > 0 || !dates.length > 0 || loading"
+        v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
         class="center-loader"
         :size="45"
         :width="5"
         color="white"
         indeterminate
       ></v-progress-circular>
+      <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="btcFill" x1="1" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#f69119"></stop>
+            <stop offset="100%" stop-color="#ffffff"></stop>
+          </linearGradient>
+        </defs>
+      </svg>
       <TrendChart
-        v-if="totalCases.length > 0 && dates.length > 0"
+        v-if="activeCases.length > 0 && dates.length > 0"
         class="chart"
         :interactive="true"
         :datasets="[dataset]"
@@ -54,9 +70,8 @@ export default {
   components: {},
   data() {
     return {
-      // showChart: false,
-      total_cases: [],
-      selectedTotalCases: 0,
+      active_cases: [],
+      selectedActiveCases: 0,
       loading: false
     }
   },
@@ -69,25 +84,22 @@ export default {
       this.$store.dispatch('fetchCasesByCountry').finally(() => (this.loading = false))
     }
   },
-  mounted() {
-    // setTimeout(() => {
-    //   this.showChart = true
-    // }, 100)
-    // this.showChart = true
-  },
   methods: {
     numberWithSpaces(n) {
       return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     },
     onMouseMove(params) {
       if (!params) {
-        this.selectedTotalCases = null
+        this.selectedActiveCases = null
         return
       }
-      this.selectedTotalCases = this.numberWithSpaces(params.data[0])
+      this.selectedActiveCases = this.numberWithSpaces(params.data[0])
     }
   },
   computed: {
+    percentClass() {
+      return this.percentageChange > 0 ? 'red--text text--lighten-2' : 'green--text text--lighten-2'
+    },
     selectedCountry: {
       get() {
         return this.$store.state.selectedCountry
@@ -106,37 +118,46 @@ export default {
     dates() {
       return this.historyByCountry.map((history) => history.record_date)
     },
-    totalCases() {
-      return this.historyByCountry.map((history) => Number(history.total_cases.replace(',', '')))
+    activeCases() {
+      return this.historyByCountry.map((history) => Number(history.active_cases))
     },
     five() {
-      return this.totalCases.filter((a, b) => this.totalCases.indexOf(a) === b)
+      return this.activeCases.filter((a, b) => this.activeCases.indexOf(a) === b)
     },
     dataset() {
-      if (!this.totalCases.length > 0) {
+      if (!this.activeCases.length > 0) {
         return {
           data: [1000, 2000, 3000, 4000, 5000],
           showPoints: true,
-          fill: true
+          fill: true,
+          className: 'active-cases'
         }
       }
       return {
-        data: this.totalCases,
+        data: this.activeCases,
         showPoints: true,
-        fill: true
+        fill: true,
+        className: 'active-cases'
       }
     },
     ...mapState({
       historyByCountry: (state) => state.historyByCountry,
-      affectedCountries: (state) => state.affectedCountries
+      affectedCountries: (state) => state.affectedCountries,
+      percentageChange: (state) => state.percentageChange
     })
   }
 }
 </script>
 
-<style lang="scss">
-.v-text-field__details {
-  display: none !important;
+<style lang="scss" scoped>
+.v-card__title {
+  //font-size: 1rem;
+  @media screen and (max-width: 780px) {
+    padding-top: 0 !important;
+  }
+}
+.active-cases {
+  margin-bottom: 10px;
 }
 .center-loader {
   position: absolute;
@@ -147,14 +168,12 @@ export default {
 .chartContainer {
   position: relative;
   width: 100%;
-  height: 63vh;
+  height: 65vh;
   background-color: #2e2e2e;
   padding: 2%;
   border-radius: 8px;
-}
-.label {
-  text {
-    fill: white;
+  @media screen and (max-width: 780px) {
+    height: 60vh;
   }
 }
 </style>

@@ -12,7 +12,9 @@
               target=":blank"
               href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
             >
+              <!-- <v-icon left>mdi-hospital-building</v-icon> -->
               <span>Health Advice</span>
+              <v-icon right>mdi-open-in-new</v-icon>
               <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
             </v-btn>
           </div>
@@ -24,7 +26,9 @@
               target=":blank"
               href="https://www.who.int/health-topics/coronavirus"
             >
+              <!-- <v-icon left>mdi-pencil</v-icon> -->
               <span>What is the Coronavirus?</span>
+              <v-icon right>mdi-open-in-new</v-icon>
               <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
             </v-btn>
           </div>
@@ -36,7 +40,9 @@
               target=":blank"
               href="https://www.worldometers.info/coronavirus/"
             >
+              <!-- <v-icon left>mdi-format-list-numbered</v-icon> -->
               <span>Statistics</span>
+              <v-icon right>mdi-open-in-new</v-icon>
               <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
             </v-btn>
           </div>

@@ -3,7 +3,8 @@ export const state = () => ({
   historyByCountry: [],
   affectedCountries: [],
   selectedCountry: 'South Africa',
-  maskUsageImage: null
+  maskUsageImage: null,
+  percentageChange: null
 })
 
 export const mutations = {
@@ -12,12 +13,12 @@ export const mutations = {
   },
   setHistoryByCountry(state, historyByCountry) {
     historyByCountry = historyByCountry.filter(
-      (a, b, c) => c.findIndex((t) => t.total_cases === a.total_cases) === b
+      (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
     )
 
     historyByCountry = historyByCountry.map((history) => {
       return {
-        total_cases: history.total_cases,
+        active_cases: history.active_cases.replace(',', ''),
         record_date: `${new Date(history.record_date.replace(/ /g, 'T')).getDate()}/${Number(
           new Date(history.record_date.replace(/ /g, 'T')).getMonth()
         ) + 1} `
@@ -43,6 +44,15 @@ export const mutations = {
   },
   setMaskUsageImage(state, image) {
     state.maskUsageImage = image
+  },
+  setPercentageChange(state) {
+    const secondLastValue = Number(
+      state.historyByCountry[state.historyByCountry.length - 2].active_cases
+    )
+    const lastValue = Number(state.historyByCountry[state.historyByCountry.length - 1].active_cases)
+    let percentChange = Math.ceil(100 - (secondLastValue * 100) / lastValue)
+    percentChange = (percentChange < 0 ? '' : '+') + percentChange
+    state.percentageChange = percentChange
   }
 }
 
@@ -61,6 +71,7 @@ export const actions = {
       .then((res) => {
         if (res.data) {
           context.commit('setHistoryByCountry', res.data.stat_by_country)
+          context.commit('setPercentageChange')
         }
       })
       .catch((err) => {
