@@ -6,13 +6,18 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-bottom-navigation v-model="bottomNav" :fixed="true">
-      <v-btn value="recent" to="/">
+    <v-bottom-navigation :fixed="true">
+      <v-btn to="/">
         <span>Chart</span>
         <v-icon>mdi-chart-bell-curve</v-icon>
       </v-btn>
 
-      <v-btn value="favorites" to="/tips">
+      <v-btn to="/stats">
+        <span>Stats</span>
+        <v-icon>mdi-notebook-outline</v-icon>
+      </v-btn>
+
+      <v-btn to="/learn">
         <span>Learn</span>
         <v-icon>mdi-safety-goggles</v-icon>
       </v-btn>
@@ -24,28 +29,15 @@
 export default {
   data() {
     return {
-      bottomNav: 'recent'
+      // bottomNav: 'recent'
     }
   },
   created() {
-    // this.$axios({
-    //   method: 'get',
-    //   url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php`,
-    //   headers: {
-    //     'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
-    //     'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
-    //   }
-    // })
-    //   .then((res) => {
-    //     // console.log(res)
-    //     this.$store.commit('setCasesByCountry', res.data.countries_stat)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
     this.$store.dispatch('fetchCasesByCountry')
     this.$store.dispatch('fetchAffectedCountries')
+    this.$store.dispatch('fetchLatestStatByCountry')
     this.$store.dispatch('fetchRandomMaskUsageInstructions')
+    this.$store.dispatch('fetchWorldTotalStat')
   }
 }
 </script>
@@ -53,6 +45,13 @@ export default {
 <style lang="scss">
 html {
   overflow: auto;
+}
+.v-content__wrap {
+  display: flex;
+}
+.v-application--wrap {
+  perspective: 1000px;
+  overflow: hidden;
 }
 .label {
   text {
@@ -78,20 +77,21 @@ text {
   }
   .fill {
     fill: #fff9f9;
-    opacity: 0.05;
+    opacity: 0.1;
   }
   .point {
     fill: #ffffff;
     //stroke: #ffffff;
     // opacity: 0.9;
-    stroke-width: 2;
+    stroke-width: 1.5;
     //stroke: #f44336;
   }
 }
 .main-container {
-  padding-bottom: 65px;
+  padding-bottom: 70px;
   //max-width: 95vw;
   opacity: 0;
+  align-self: center;
   animation: fade-in 0.6s ease 0.3s forwards 1;
 }
 @keyframes fade-in {
@@ -110,8 +110,21 @@ text {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  filter: opacity(0.1);
+  filter: opacity(0.2);
+  animation: move 60s ease infinite;
 }
+@keyframes move {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(20deg) scale(1.5) translateY(50px);
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
 .v-bottom-navigation {
   a {
     height: 100% !important;

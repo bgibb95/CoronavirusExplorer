@@ -2,9 +2,11 @@ export const state = () => ({
   casesByCountry: [],
   historyByCountry: [],
   affectedCountries: [],
+  latestCountryStat: [],
   selectedCountry: 'South Africa',
   maskUsageImage: null,
-  percentageChange: null
+  percentageChange: null,
+  worldTotalStat: null
 })
 
 export const mutations = {
@@ -46,17 +48,59 @@ export const mutations = {
     state.maskUsageImage = image
   },
   setPercentageChange(state) {
-    const secondLastValue = Number(
-      state.historyByCountry[state.historyByCountry.length - 2].active_cases
-    )
+    const secondLastValue = Number(state.historyByCountry[state.historyByCountry.length - 2].active_cases)
     const lastValue = Number(state.historyByCountry[state.historyByCountry.length - 1].active_cases)
     let percentChange = Math.ceil(100 - (secondLastValue * 100) / lastValue)
     percentChange = (percentChange < 0 ? '' : '+') + percentChange
     state.percentageChange = percentChange
+  },
+  setLatestStatByCountry(state, latestCountryStat) {
+    state.latestCountryStat = latestCountryStat
+  },
+  setWorldTotalStat(state, worldTotalStat) {
+    state.worldTotalStat = worldTotalStat
   }
 }
 
 export const actions = {
+  fetchWorldTotalStat(context) {
+    return this.$axios({
+      method: 'get',
+      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php`,
+      headers: {
+        'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
+        'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
+      }
+    })
+      .then((res) => {
+        if (res.data) {
+          context.commit('setWorldTotalStat', res.data)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+  fetchLatestStatByCountry(context) {
+    return this.$axios({
+      method: 'get',
+      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=${encodeURI(
+        context.state.selectedCountry
+      )}`,
+      headers: {
+        'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
+        'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
+      }
+    })
+      .then((res) => {
+        if (res.data) {
+          context.commit('setLatestStatByCountry', res.data.latest_stat_by_country)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
   fetchCasesByCountry(context) {
     return this.$axios({
       method: 'get',

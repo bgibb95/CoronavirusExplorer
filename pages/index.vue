@@ -16,7 +16,7 @@
 
     <h5 v-if="percentageChange" class="my-3">
       <span v-if="!loading">
-        <span :class="percentClass">{{ percentageChange }}% </span> over yesterday
+        <span :class="percentClass">{{ percentageChange }}% </span> over previous day
       </span>
       <span v-if="loading">&nbsp;</span>
     </h5>
@@ -82,6 +82,7 @@ export default {
       }
       this.loading = true
       this.$store.dispatch('fetchCasesByCountry').finally(() => (this.loading = false))
+      this.$store.dispatch('fetchLatestStatByCountry')
     }
   },
   methods: {
@@ -169,7 +170,8 @@ export default {
   position: relative;
   width: 100%;
   height: 65vh;
-  background-color: #2e2e2e;
+  border: 1px solid rgba(white, 0.3);
+  background-color: rgba(#2e2e2e, 0.8);
   padding: 2%;
   border-radius: 8px;
   @media screen and (max-width: 780px) {
