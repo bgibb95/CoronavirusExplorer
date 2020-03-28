@@ -306,7 +306,7 @@ h4 {
   border-radius: 8px;
   //border: 1px solid rgba(white, 0.2);
   @media screen and (max-width: 780px) {
-    margin-top: 16px;
+    margin-top: 8px;
     margin-bottom: 0;
   }
 }

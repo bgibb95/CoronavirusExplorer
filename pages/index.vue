@@ -24,8 +24,13 @@
       <span v-if="!loading">
         Active cases in {{ selectedCountry }}
         <span v-if="selectedActiveCases"
-          >: <span class="blue--text text--lighten-1">{{ selectedActiveCases }}</span></span
-        >
+          >:
+          <span class="blue--text text--lighten-1"
+            ><b>{{ selectedActiveCases }}</b>
+          </span>
+          on
+          <span>{{ selectedDate }} </span>
+        </span>
       </span>
       <span v-if="loading">Updating...</span>
     </h4>
@@ -72,6 +77,7 @@ export default {
     return {
       active_cases: [],
       selectedActiveCases: 0,
+      selectedDate: 0,
       loading: false
     }
   },
@@ -95,6 +101,11 @@ export default {
         return
       }
       this.selectedActiveCases = this.numberWithSpaces(params.data[0])
+      // console.log(params.data[0])
+      // console.log()
+      this.selectedDate = this.historyByCountry.find(
+        (history) => Number(history.active_cases) === params.data[0]
+      ).record_date
     }
   },
   computed: {
@@ -117,6 +128,12 @@ export default {
       }
     },
     dates() {
+      if (this.historyByCountry.length > 6) {
+        return [
+          this.historyByCountry[0].record_date,
+          this.historyByCountry[this.historyByCountry.length - 1].record_date
+        ]
+      }
       return this.historyByCountry.map((history) => history.record_date)
     },
     activeCases() {

@@ -14,9 +14,13 @@ export const mutations = {
     state.casesByCountry = casesByCountry
   },
   setHistoryByCountry(state, historyByCountry) {
-    historyByCountry = historyByCountry.filter(
+    const newHistoryByCountry = historyByCountry.filter(
       (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
     )
+
+    if (newHistoryByCountry.length > 1) {
+      historyByCountry = newHistoryByCountry
+    }
 
     historyByCountry = historyByCountry.map((history) => {
       return {
@@ -27,14 +31,16 @@ export const mutations = {
       }
     })
 
-    if (historyByCountry.length > 6) {
-      historyByCountry = historyByCountry.filter(
-        (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
-      )
-    }
+    // if (historyByCountry.length > 6) {
+    //   historyByCountry = historyByCountry.filter(
+    //     (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
+    //   )
+    // }
 
-    if (historyByCountry.length > 6) {
-      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - 6, 1))
+    const maxLength = window.innerWidth >= 768 ? 80 : 30
+
+    if (historyByCountry.length > maxLength) {
+      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 1))
     }
     state.historyByCountry = historyByCountry
   },
@@ -48,11 +54,18 @@ export const mutations = {
     state.maskUsageImage = image
   },
   setPercentageChange(state) {
-    const secondLastValue = Number(state.historyByCountry[state.historyByCountry.length - 2].active_cases)
-    const lastValue = Number(state.historyByCountry[state.historyByCountry.length - 1].active_cases)
-    let percentChange = Math.ceil(100 - (secondLastValue * 100) / lastValue)
-    percentChange = (percentChange < 0 ? '' : '+') + percentChange
-    state.percentageChange = percentChange
+    const filteredDuplicateDates = state.historyByCountry.filter(
+      (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
+    )
+    if (filteredDuplicateDates.length > 1) {
+      const secondLastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 2].active_cases)
+      const lastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 1].active_cases)
+      let percentChange = Math.ceil(100 - (secondLastValue * 100) / lastValue)
+      percentChange = (percentChange < 0 ? '' : '+') + percentChange
+      state.percentageChange = percentChange
+    } else {
+      state.percentageChange = 0
+    }
   },
   setLatestStatByCountry(state, latestCountryStat) {
     state.latestCountryStat = latestCountryStat
