@@ -110,8 +110,8 @@ text {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  filter: opacity(0.2);
-  animation: move 60s ease infinite;
+  filter: opacity(0.15);
+  animation: move 50s ease infinite;
 }
 @keyframes move {
   0% {

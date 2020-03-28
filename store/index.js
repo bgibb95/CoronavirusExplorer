@@ -31,15 +31,17 @@ export const mutations = {
       }
     })
 
-    // if (historyByCountry.length > 6) {
-    //   historyByCountry = historyByCountry.filter(
-    //     (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
-    //   )
-    // }
     let maxLength = 30
 
     if (process.client && window.innerWidth >= 768) {
       maxLength = 80
+    }
+
+    if (historyByCountry.length > 6) {
+      historyByCountry = historyByCountry
+        .reverse()
+        .filter((a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b)
+        .reverse()
     }
 
     if (historyByCountry.length > maxLength) {
@@ -57,9 +59,10 @@ export const mutations = {
     state.maskUsageImage = image
   },
   setPercentageChange(state) {
-    const filteredDuplicateDates = state.historyByCountry.filter(
-      (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
-    )
+    const filteredDuplicateDates = [...state.historyByCountry]
+      .reverse()
+      .filter((a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b)
+      .reverse()
     if (filteredDuplicateDates.length > 1) {
       const secondLastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 2].active_cases)
       const lastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 1].active_cases)
