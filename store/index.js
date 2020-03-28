@@ -36,8 +36,11 @@ export const mutations = {
     //     (a, b, c) => c.findIndex((t) => t.record_date === a.record_date) === b
     //   )
     // }
+    let maxLength = 30
 
-    const maxLength = window.innerWidth >= 768 ? 80 : 30
+    if (process.client && window.innerWidth >= 768) {
+      maxLength = 80
+    }
 
     if (historyByCountry.length > maxLength) {
       historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 1))
