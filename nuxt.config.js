@@ -9,8 +9,8 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: 'COVID-19 Tracker',
-    title: 'COVID-19 Tracker',
+    titleTemplate: 'Coronavirus Explorer',
+    title: 'Coronavirus Explorer',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -21,7 +21,13 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Poppins&display=swap'
+      }
+    ],
     script: [
       {
         src: 'scripts/ResizeSensor.js'
@@ -99,10 +105,10 @@ export default {
   },
   pwa: {
     manifest: {
-      name: 'COVID-19 Tracker',
-      short_name: 'COVID-19 Tracker',
+      name: 'Coronavirus Explorer',
+      short_name: 'Coronavirus Explorer',
       background_color: '#212121',
-      description: 'A web app to track statistics of the Coronavirus'
+      description: 'A web app to track statistics of the Coronavirus (COVID-19)'
     }
   },
   /*

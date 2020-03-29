@@ -4,7 +4,7 @@
     <v-app dark>
       <v-app-bar dense dark app hide-on-scroll>
         <v-icon size="large" class="px-1">mdi-lighthouse-on</v-icon>
-        <h4 class="main-title">Corona Explorer</h4>
+        <h4 class="main-title">Coronavirus Explorer</h4>
       </v-app-bar>
       <v-content>
         <v-container class="main-container" :style="{ height: pageHeight }">
@@ -58,13 +58,11 @@ export default {
 <style lang="scss">
 // @import '~vuetify/src/styles/styles.sass';
 // @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 //$body-font-family: 'Montserrat' !important;
-$body-font-family: 'Poppins' !important;
+$body-font-family: 'Poppins';
 
 .v-application {
-  font-family: $body-font-family;
+  font-family: $body-font-family, 'Roboto', sans-serif !important;
   //font-family: $body-font-family;
   //letter-spacing: 1px !important;
 }
@@ -215,7 +213,7 @@ text {
 
 .slide-left-enter-active,
 .slide-left-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .slide-right-enter {
@@ -228,6 +226,6 @@ text {
 
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 </style>
