@@ -1,36 +1,49 @@
 <template>
-  <v-app dark>
+  <div>
     <div class="bg"></div>
-    <v-content>
-      <v-container class="main-container">
-        <nuxt />
-      </v-container>
-    </v-content>
-    <v-bottom-navigation :fixed="true">
-      <v-btn to="/">
-        <span>Chart</span>
-        <v-icon>mdi-chart-bell-curve</v-icon>
-      </v-btn>
+    <v-app dark>
+      <v-app-bar dense dark app hide-on-scroll>
+        <v-icon size="large" class="px-1">mdi-lighthouse-on</v-icon>
+        <h4 class="main-title">Corona Explorer</h4>
+      </v-app-bar>
+      <v-content>
+        <v-container class="main-container" :style="{ height: pageHeight }">
+          <nuxt />
+        </v-container>
+      </v-content>
+      <v-bottom-navigation :fixed="true" app hide-on-scroll grow>
+        <v-btn to="/">
+          <span>Chart</span>
+          <v-icon>mdi-chart-bell-curve</v-icon>
+        </v-btn>
 
-      <v-btn to="/stats">
-        <span>Stats</span>
-        <v-icon>mdi-notebook-outline</v-icon>
-      </v-btn>
+        <v-btn to="/stats">
+          <span>Stats</span>
+          <v-icon>mdi-notebook-outline</v-icon>
+        </v-btn>
 
-      <v-btn to="/learn">
-        <span>Learn</span>
-        <v-icon>mdi-safety-goggles</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-  </v-app>
+        <v-btn to="/learn">
+          <span>Learn</span>
+          <v-icon>mdi-safety-goggles</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </v-app>
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
       // bottomNav: 'recent'
     }
+  },
+  computed: {
+    ...mapState({
+      pageHeight: (state) => state.pageHeight + 'px'
+    })
   },
   created() {
     this.$store.dispatch('fetchCasesByCountry')
@@ -43,14 +56,55 @@ export default {
 </script>
 
 <style lang="scss">
+// @import '~vuetify/src/styles/styles.sass';
+// @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+//$body-font-family: 'Montserrat' !important;
+$body-font-family: 'Poppins' !important;
+
+.v-application {
+  font-family: $body-font-family;
+  //font-family: $body-font-family;
+  //letter-spacing: 1px !important;
+}
+h4 {
+  font-weight: 100;
+  font-family: $body-font-family;
+  font-size: 0.95rem !important;
+}
+.main-title {
+  font-weight: 500;
+  font-family: $body-font-family;
+}
+.page-container {
+  //display: flex;
+  //align-content: center;
+  position: absolute;
+  padding: 15px 12px;
+  //padding-bottom: 15px;
+  width: 100%;
+  //height: 100%;
+  //top: 50%;
+  //transform: translateY(-50%);
+  left: 0;
+  @media screen and (max-width: 780px) {
+    padding: 5px 12px 15px;
+  }
+}
+.row {
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
+}
 html {
   overflow: auto;
+  background: #121212;
 }
 .v-content__wrap {
   display: flex;
 }
 .v-application--wrap {
-  perspective: 1000px;
   overflow: hidden;
 }
 .label {
@@ -88,10 +142,13 @@ text {
   }
 }
 .main-container {
-  padding-bottom: 70px;
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  //padding-bottom: 70px;
   //max-width: 95vw;
-  opacity: 0;
-  align-self: center;
+  //opacity: 0;
+  //align-self: center;
   animation: fade-in 0.6s ease 0.3s forwards 1;
 }
 @keyframes fade-in {
@@ -110,15 +167,16 @@ text {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  filter: opacity(0.15);
-  animation: move 50s ease infinite;
+  filter: blur(1px);
+  opacity: (0.15);
+  animation: move 20s ease infinite;
 }
 @keyframes move {
   0% {
     transform: rotateX(0);
   }
   50% {
-    transform: rotateX(20deg) scale(1.5) translateY(50px);
+    transform: rotateX(0deg) scale(1.1) translateY(0px);
   }
   100% {
     transform: rotateX(0);
@@ -126,8 +184,12 @@ text {
 }
 
 .v-bottom-navigation {
+  height: 52px !important;
   a {
+    font-family: $body-font-family;
     height: 100% !important;
+    font-weight: 300 !important;
+    font-size: 10px !important;
   }
 }
 .page-enter {
@@ -141,5 +203,31 @@ text {
 .page-enter-active,
 .page-leave-active {
   transition: all 0.19s ease;
+}
+
+.slide-left-enter {
+  transform: translateX(-120%);
+}
+
+.slide-left-leave-active {
+  transform: translateX(120%);
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-right-enter {
+  transform: translateX(120%);
+}
+
+.slide-right-leave-active {
+  transform: translateX(-120%);
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.3s ease;
 }
 </style>

@@ -21,12 +21,21 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src: 'scripts/ResizeSensor.js'
+      }
+    ]
   },
 
   server: {
     port: 8000, // default: 3000
     host: '10.0.0.102' // default: localhost
+  },
+
+  transition: {
+    mode: ''
   },
 
   router: {

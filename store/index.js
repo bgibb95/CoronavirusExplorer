@@ -6,7 +6,8 @@ export const state = () => ({
   selectedCountry: 'South Africa',
   maskUsageImage: null,
   percentageChange: null,
-  worldTotalStat: null
+  worldTotalStat: null,
+  pageHeight: 0
 })
 
 export const mutations = {
@@ -57,6 +58,9 @@ export const mutations = {
   },
   setMaskUsageImage(state, image) {
     state.maskUsageImage = image
+  },
+  setPageHeight(state, height) {
+    state.pageHeight = height
   },
   setPercentageChange(state) {
     const filteredDuplicateDates = [...state.historyByCountry]

@@ -1,71 +1,73 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-row>
-      <v-card-title class="justify-center">COVID-19 Tracker</v-card-title>
-      <v-autocomplete
-        v-if="affectedCountries.length > 0"
-        v-model="selectedCountry"
-        :items="affectedCountries"
-        shaped
-        dense
-        :menu-props="{ maxHeight: 170 }"
-        filled
-        label="Search country"
-      ></v-autocomplete>
-    </v-row>
+  <div class="page-container chart-page">
+    <v-layout column justify-center align-center>
+      <v-row>
+        <!-- <v-card-title class="justify-center">COVID-19 Tracker</v-card-title> -->
+        <v-autocomplete
+          v-if="affectedCountries.length > 0"
+          v-model="selectedCountry"
+          :items="affectedCountries"
+          shaped
+          dense
+          :menu-props="{ maxHeight: 170 }"
+          filled
+          label="Search country"
+        ></v-autocomplete>
+      </v-row>
 
-    <h5 v-if="percentageChange" class="my-3">
-      <span v-if="!loading">
-        <span :class="percentClass">{{ percentageChange }}% </span> over previous day
-      </span>
-      <span v-if="loading">&nbsp;</span>
-    </h5>
-    <h4 class="active-cases">
-      <span v-if="!loading">
-        Active cases in {{ selectedCountry }}
-        <span v-if="selectedActiveCases"
-          >:
-          <span class="blue--text text--lighten-1"
-            ><b>{{ selectedActiveCases }}</b>
-          </span>
-          on
-          <span>{{ selectedDate }} </span>
+      <h5 v-if="percentageChange" class="my-3 percent-change-title">
+        <span v-if="!loading">
+          <span :class="percentClass">{{ percentageChange }}%</span> over previous day
         </span>
-      </span>
-      <span v-if="loading">Updating...</span>
-    </h4>
-    <div class="chartContainer">
-      <v-progress-circular
-        v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
-        class="center-loader"
-        :size="45"
-        :width="5"
-        color="white"
-        indeterminate
-      ></v-progress-circular>
-      <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="btcFill" x1="1" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="#f69119"></stop>
-            <stop offset="100%" stop-color="#ffffff"></stop>
-          </linearGradient>
-        </defs>
-      </svg>
-      <TrendChart
-        v-if="activeCases.length > 0 && dates.length > 0"
-        class="chart"
-        :interactive="true"
-        :datasets="[dataset]"
-        :grid="{
-          verticalLines: true,
-          horizontalLines: true
-        }"
-        :min="0"
-        :labels="labels"
-        @mouse-move="onMouseMove"
-      ></TrendChart>
-    </div>
-  </v-layout>
+        <span v-if="loading">&nbsp;</span>
+      </h5>
+      <h4 class="active-cases">
+        <span v-if="!loading">
+          Active cases in {{ selectedCountry }}
+          <span v-if="selectedActiveCases">
+            :
+            <span class="blue--text text--lighten-1">
+              <b>{{ selectedActiveCases }}</b>
+            </span>
+            on
+            <span>{{ selectedDate }}</span>
+          </span>
+        </span>
+        <span v-if="loading">Updating...</span>
+      </h4>
+      <div class="chartContainer">
+        <v-progress-circular
+          v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
+          class="center-loader"
+          :size="45"
+          :width="5"
+          color="white"
+          indeterminate
+        ></v-progress-circular>
+        <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="btcFill" x1="1" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#f69119" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <TrendChart
+          v-if="activeCases.length > 0 && dates.length > 0"
+          class="chart"
+          :interactive="true"
+          :datasets="[dataset]"
+          :grid="{
+            verticalLines: true,
+            horizontalLines: true
+          }"
+          :min="0"
+          :labels="labels"
+          @mouse-move="onMouseMove"
+        ></TrendChart>
+      </div>
+    </v-layout>
+  </div>
 </template>
 
 <script>
@@ -73,6 +75,16 @@ import { mapState } from 'vuex'
 
 export default {
   components: {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transition(to, from) {
+    if (!from) {
+      return 'slide-left'
+    }
+    // if (to.name === 'stats' || to.name === 'learn') {
+    //   return 'slide-right'
+    // }
+    return 'slide-left'
+  },
   data() {
     return {
       active_cases: [],
@@ -91,6 +103,13 @@ export default {
       this.$store.dispatch('fetchLatestStatByCountry')
     }
   },
+  mounted() {
+    const element = document.querySelector('.chart-page')
+    // eslint-disable-next-line no-new, no-undef
+    new ResizeSensor(element, () => {
+      this.$store.commit('setPageHeight', element.offsetHeight + 15)
+    })
+  },
   methods: {
     numberWithSpaces(n) {
       return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -101,8 +120,6 @@ export default {
         return
       }
       this.selectedActiveCases = this.numberWithSpaces(params.data[0])
-      // console.log(params.data[0])
-      // console.log()
       this.selectedDate = this.historyByCountry.find(
         (history) => Number(history.active_cases) === params.data[0]
       ).record_date
@@ -168,6 +185,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.percent-change-title {
+  margin-bottom: 0 !important;
+}
 .v-card__title {
   //font-size: 1rem;
   @media screen and (max-width: 780px) {
@@ -175,6 +195,7 @@ export default {
   }
 }
 .active-cases {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 .center-loader {
@@ -186,7 +207,7 @@ export default {
 .chartContainer {
   position: relative;
   width: 100%;
-  height: 65vh;
+  height: 62vh;
   border: 1px solid rgba(white, 0.3);
   background-color: rgba(#2e2e2e, 0.8);
   padding: 2%;
