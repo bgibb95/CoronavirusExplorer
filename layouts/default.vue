@@ -78,6 +78,7 @@ export default {
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the A2HS prompt')
+            addBtn.style.display = 'none'
           } else {
             console.log('User dismissed the A2HS prompt')
           }
@@ -94,7 +95,9 @@ export default {
 // @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 //$body-font-family: 'Montserrat' !important;
 $body-font-family: 'Poppins';
-
+.add-btn {
+  display: none;
+}
 .v-application {
   font-family: $body-font-family, 'Roboto', sans-serif !important;
   //font-family: $body-font-family;
