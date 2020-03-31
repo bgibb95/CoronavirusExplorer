@@ -10,38 +10,25 @@
             <div class="my-3">
               <v-btn
                 :block="true"
-                value="recent"
                 target=":blank"
                 href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
               >
-                <!-- <v-icon left>mdi-hospital-building</v-icon> -->
                 <span>Health Advice</span>
                 <v-icon right>mdi-open-in-new</v-icon>
-                <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
               </v-btn>
             </div>
 
             <div class="my-3">
-              <v-btn
-                :block="true"
-                value="recent"
-                target=":blank"
-                outlined=""
-                href="https://www.who.int/health-topics/coronavirus"
-              >
-                <!-- <v-icon left>mdi-pencil</v-icon> -->
+              <v-btn :block="true" target=":blank" href="https://www.who.int/health-topics/coronavirus">
                 <span>What is the Coronavirus?</span>
                 <v-icon right>mdi-open-in-new</v-icon>
-                <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
               </v-btn>
             </div>
 
             <div class="my-3">
-              <v-btn :block="true" value="recent" target=":blank" href="https://www.worldometers.info/coronavirus/">
-                <!-- <v-icon left>mdi-format-list-numbered</v-icon> -->
+              <v-btn :block="true" target=":blank" href="https://www.worldometers.info/coronavirus/">
                 <span>Statistics</span>
                 <v-icon right>mdi-open-in-new</v-icon>
-                <!-- <v-icon>mdi-chart-bell-curve</v-icon> -->
               </v-btn>
             </div>
           </v-card-text>

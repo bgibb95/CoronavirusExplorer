@@ -222,7 +222,7 @@ text {
   animation: move 20s ease infinite;
   @media screen and (max-width: 780px) {
     //opacity: (0.15);
-    filter: blur(2px);
+    filter: blur(0px);
   }
 }
 @keyframes move {
