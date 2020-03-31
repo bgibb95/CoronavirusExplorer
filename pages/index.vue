@@ -44,14 +44,6 @@
           color="white"
           indeterminate
         ></v-progress-circular>
-        <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id="btcFill" x1="1" x2="1" y1="0" y2="1">
-              <stop offset="0%" stop-color="#f69119" />
-              <stop offset="100%" stop-color="#ffffff" />
-            </linearGradient>
-          </defs>
-        </svg>
         <TrendChart
           v-if="activeCases.length > 0 && dates.length > 0"
           class="chart"
@@ -197,6 +189,7 @@ export default {
 .active-cases {
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center;
 }
 .center-loader {
   position: absolute;

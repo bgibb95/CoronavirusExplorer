@@ -1,5 +1,13 @@
 <template>
   <div>
+    <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="gradientFill" x1="1" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fff9f9" />
+          <stop offset="100%" stop-opacity="0.1" stop-color="#ffffff" />
+        </linearGradient>
+      </defs>
+    </svg>
     <div class="bg"></div>
     <v-app dark>
       <v-app-bar dense dark app hide-on-scroll>
@@ -150,9 +158,13 @@ html {
 .v-text-field__details {
   display: none !important;
 }
+.line {
+  stroke: #121212 !important;
+  opacity: 0.3;
+}
 .active-line {
   stroke: #42a5f5 !important;
-  stroke-width: 2;
+  stroke-width: 3;
   opacity: 1;
 }
 text {
@@ -165,8 +177,10 @@ text {
     //stroke: #ffffff;
   }
   .fill {
-    fill: #fff9f9;
-    opacity: 0.1;
+    fill: url(#gradientFill);
+    //fill: #fff9f9;
+    opacity: 0.5;
+    //fill: #eef0ed;
   }
   .point {
     fill: #ffffff;
@@ -204,8 +218,12 @@ text {
   background-position: center center;
   background-attachment: fixed;
   filter: blur(1px);
-  opacity: (0.15);
+  opacity: (0.2);
   animation: move 20s ease infinite;
+  @media screen and (max-width: 780px) {
+    //opacity: (0.15);
+    filter: blur(2px);
+  }
 }
 @keyframes move {
   0% {
