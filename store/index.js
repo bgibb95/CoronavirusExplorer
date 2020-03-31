@@ -89,7 +89,7 @@ export const actions = {
   fetchWorldTotalStat(context) {
     return this.$axios({
       method: 'get',
-      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php`,
+      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/world_total_stat.php`,
       headers: {
         'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
         'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
@@ -107,7 +107,7 @@ export const actions = {
   fetchLatestStatByCountry(context) {
     return this.$axios({
       method: 'get',
-      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=${encodeURI(
+      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country_name.php?country=${encodeURI(
         context.state.selectedCountry
       )}`,
       headers: {
@@ -167,7 +167,7 @@ export const actions = {
     this.$axios({
       responseType: 'blob',
       method: 'get',
-      url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/masks.php',
+      url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/random_masks_usage_instructions.php',
       headers: {
         'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
         'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
