@@ -32,11 +32,12 @@
               </v-btn>
             </div>
           </v-card-text>
-
-          <div v-if="maskUsageImage" class="image-container">
-            <h4 class="my-3 text-center">Mask usage tip</h4>
-            <img v-if="maskUsageImage" :src="maskUsageImage" alt="" />
-          </div>
+          <transition name="fade">
+            <div v-if="maskUsageImage" class="image-container">
+              <h4 class="my-3 text-center">Mask usage tip</h4>
+              <img v-if="maskUsageImage" :src="maskUsageImage" alt />
+            </div>
+          </transition>
         </v-card>
       </v-flex>
     </v-layout>
@@ -66,6 +67,7 @@ export default {
     new ResizeSensor(element, () => {
       this.$store.commit('setPageHeight', element.offsetHeight + 10)
     })
+    this.$store.dispatch('fetchRandomMaskUsageInstructions')
   },
   computed: {
     ...mapState({
@@ -76,6 +78,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .row {
   @media screen and (max-width: 780px) {
     align-self: flex-start;

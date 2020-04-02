@@ -26,6 +26,10 @@ export default {
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Poppins&display=swap'
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css'
       }
     ],
     script: [
@@ -87,6 +91,8 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
+    treeShake: true,
+    defaultAssets: false,
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,

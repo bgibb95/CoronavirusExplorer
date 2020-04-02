@@ -7,10 +7,14 @@ export const state = () => ({
   maskUsageImage: null,
   percentageChange: null,
   worldTotalStat: null,
-  pageHeight: 0
+  pageHeight: 0,
+  isMaskUsageImageFetched: false
 })
 
 export const mutations = {
+  setIsMaskUsageImageFetched(state, boolean) {
+    state.isMaskUsageImageFetched = boolean
+  },
   setCasesByCountry(state, casesByCountry) {
     state.casesByCountry = casesByCountry
   },
@@ -164,32 +168,35 @@ export const actions = {
       })
   },
   fetchRandomMaskUsageInstructions(context) {
-    this.$axios({
-      responseType: 'blob',
-      method: 'get',
-      url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/random_masks_usage_instructions.php',
-      headers: {
-        'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
-        'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
-      }
-    })
-      .then((res) => {
-        function blobToDataUrl(blob) {
-          return new Promise((resolve) => {
-            if (process.client) {
-              const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
-              reader.onload = (e) => resolve(e.target.result)
-              reader.readAsDataURL(blob)
-            }
-          })
+    if (!context.state.isMaskUsageImageFetched) {
+      this.$axios({
+        responseType: 'blob',
+        method: 'get',
+        url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/random_masks_usage_instructions.php',
+        headers: {
+          'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
+          'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
         }
+      })
+        .then((res) => {
+          function blobToDataUrl(blob) {
+            return new Promise((resolve) => {
+              if (process.client) {
+                const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+                reader.onload = (e) => resolve(e.target.result)
+                reader.readAsDataURL(blob)
+              }
+            })
+          }
 
-        blobToDataUrl(res.data).then((url) => {
-          context.commit('setMaskUsageImage', url)
+          blobToDataUrl(res.data).then((url) => {
+            context.commit('setMaskUsageImage', url)
+          })
         })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .catch((err) => {
+          console.log(err)
+        })
+      context.commit('setIsMaskUsageImageFetched', true)
+    }
   }
 }

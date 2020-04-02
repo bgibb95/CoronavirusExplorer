@@ -61,7 +61,6 @@ export default {
     this.$store.dispatch('fetchCasesByCountry')
     this.$store.dispatch('fetchAffectedCountries')
     this.$store.dispatch('fetchLatestStatByCountry')
-    this.$store.dispatch('fetchRandomMaskUsageInstructions')
     this.$store.dispatch('fetchWorldTotalStat')
   },
   mounted() {
@@ -141,7 +140,7 @@ h4 {
   }
 }
 html {
-  overflow: auto;
+  overflow: auto !important;
   background: #121212;
 }
 .v-content__wrap {
