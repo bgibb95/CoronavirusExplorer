@@ -3,190 +3,201 @@
     <v-layout column justify-center align-center>
       <v-row>
         <!-- <v-card-title class="justify-center">COVID-19 Tracker</v-card-title> -->
-        <v-autocomplete
-          v-if="affectedCountries.length > 0"
-          v-model="selectedCountry"
-          :items="affectedCountries"
-          shaped
-          dense
-          :menu-props="{ maxHeight: 170 }"
-          filled
-          label="Search country"
-        ></v-autocomplete>
+        <transition name="fade">
+          <v-autocomplete
+            v-if="affectedCountries.length > 0"
+            v-model="selectedCountry"
+            :append-icon="mdiMenuDown"
+            :items="affectedCountries"
+            shaped
+            dense
+            :menu-props="{ maxHeight: 170 }"
+            filled
+            label="Search country"
+          ></v-autocomplete>
+        </transition>
       </v-row>
       <!-- <h4 class="active-cases">
       <span v-if="countryStat:oading">Updating...</span>
     </h4>-->
 
-      <div v-if="latestCountryStat" class="chartContainer">
-        <h4 class="justify-center">
-          <span v-if="!countryStatLoading">{{ selectedCountry }}</span>
-          <span v-if="countryStatLoading">Updating...</span>
-        </h4>
-        <v-row class="stats-row">
-          <v-col v-if="latestCountryStat.active_cases" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Active cases</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
-                    {{ latestCountryStat.active_cases }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+      <transition name="fade">
+        <div v-if="latestCountryStat" class="chartContainer">
+          <h4 class="justify-center">
+            <span v-if="!countryStatLoading">{{ selectedCountry }}</span>
+            <span v-if="countryStatLoading">Updating...</span>
+          </h4>
+          <v-row class="stats-row">
+            <v-col v-if="latestCountryStat.active_cases" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Active cases</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ latestCountryStat.active_cases }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="latestCountryStat.total_cases" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Total cases</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
-                    {{ latestCountryStat.total_cases }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="latestCountryStat.total_cases" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Total cases</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ latestCountryStat.total_cases }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="latestCountryStat.total_deaths" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Total deaths</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
-                    latestCountryStat.total_deaths
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="latestCountryStat.total_deaths" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Total deaths</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
+                      latestCountryStat.total_deaths
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="latestCountryStat.total_recovered" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
-                    latestCountryStat.total_recovered
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="latestCountryStat.total_recovered" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
+                      latestCountryStat.total_recovered
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="latestCountryStat.serious_critical" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
-                    latestCountryStat.serious_critical
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
-        </v-row>
+            <v-col v-if="latestCountryStat.serious_critical" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
+                      latestCountryStat.serious_critical
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
+          </v-row>
 
-        <v-progress-circular
-          v-if="countryStatLoading"
-          class="center-loader"
-          :size="45"
-          :width="5"
-          color="white"
-          indeterminate
-        ></v-progress-circular>
-      </div>
+          <transition name="fade">
+            <v-progress-circular
+              v-if="countryStatLoading"
+              class="center-loader"
+              :size="45"
+              :width="5"
+              color="white"
+              indeterminate
+            ></v-progress-circular>
+          </transition>
+        </div>
+      </transition>
 
-      <div v-if="worldTotalStat" class="chartContainer">
-        <h4 class="justify-center">
-          <span v-if="!worldStatLoading">Worldwide</span>
-          <span v-if="worldStatLoading">Updating...</span>
-        </h4>
-        <v-row class="stats-row">
-          <v-col v-if="worldTotalStat.active_cases" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Active cases</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
-                    {{ worldTotalStat.active_cases }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+      <transition name="fade">
+        <div v-if="worldTotalStat" class="chartContainer">
+          <h4 class="justify-center">
+            <span v-if="!worldStatLoading">Worldwide</span>
+            <span v-if="worldStatLoading">Updating...</span>
+          </h4>
+          <v-row class="stats-row">
+            <v-col v-if="worldTotalStat.active_cases" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Active cases</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ worldTotalStat.active_cases }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="worldTotalStat.total_cases" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Total cases</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
-                    worldTotalStat.total_cases
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="worldTotalStat.total_cases" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Total cases</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
+                      worldTotalStat.total_cases
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="worldTotalStat.total_deaths" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Total deaths</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
-                    worldTotalStat.total_deaths
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="worldTotalStat.total_deaths" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title>Total deaths</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
+                      worldTotalStat.total_deaths
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="worldTotalStat.total_recovered" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
-                    worldTotalStat.total_recovered
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
+            <v-col v-if="worldTotalStat.total_recovered" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
+                      worldTotalStat.total_recovered
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
 
-          <v-col v-if="worldTotalStat.serious_critical" md="2" cols="6">
-            <v-card outlined>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
-                  <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
-                    worldTotalStat.serious_critical
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <v-progress-circular
-          v-if="worldStatLoading"
-          class="center-loader"
-          :size="45"
-          :width="5"
-          color="white"
-          indeterminate
-        ></v-progress-circular>
-      </div>
+            <v-col v-if="worldTotalStat.serious_critical" md="2" cols="6">
+              <v-card outlined>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
+                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
+                      worldTotalStat.serious_critical
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </v-col>
+          </v-row>
+          <transition name="fade">
+            <v-progress-circular
+              v-if="worldStatLoading"
+              class="center-loader"
+              :size="45"
+              :width="5"
+              color="white"
+              indeterminate
+            ></v-progress-circular>
+          </transition>
+        </div>
+      </transition>
     </v-layout>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { mdiMenuDown } from '@mdi/js'
 
 export default {
   components: {},
@@ -205,7 +216,8 @@ export default {
   data() {
     return {
       countryStatLoading: false,
-      worldStatLoading: false
+      worldStatLoading: false,
+      mdiMenuDown
     }
   },
   watch: {

@@ -3,25 +3,30 @@
     <v-layout column justify-center align-center>
       <v-row>
         <!-- <v-card-title class="justify-center">COVID-19 Tracker</v-card-title> -->
-        <v-autocomplete
-          v-if="affectedCountries.length > 0"
-          v-model="selectedCountry"
-          :append-icon="mdiMenuDown"
-          :items="affectedCountries"
-          shaped
-          dense
-          :menu-props="{ maxHeight: 170 }"
-          filled
-          label="Search country"
-        ></v-autocomplete>
+        <transition name="fade">
+          <v-autocomplete
+            v-if="affectedCountries.length > 0"
+            v-model="selectedCountry"
+            :append-icon="mdiMenuDown"
+            :items="affectedCountries"
+            shaped
+            dense
+            :menu-props="{ maxHeight: 170 }"
+            filled
+            label="Search country"
+          ></v-autocomplete>
+        </transition>
       </v-row>
 
-      <h5 v-if="percentageChange" class="my-3 percent-change-title">
-        <span v-if="!loading">
-          <span :class="percentClass">{{ percentageChange }}%</span> over previous day
-        </span>
-        <span v-if="loading">&nbsp;</span>
-      </h5>
+      <transition name="fade">
+        <h5 v-if="percentageChange" class="my-3 percent-change-title">
+          <span v-if="!loading">
+            <span :class="percentClass">{{ percentageChange }}%</span> over previous day
+          </span>
+          <span v-if="loading">&nbsp;</span>
+        </h5>
+      </transition>
+
       <h4 class="active-cases">
         <span v-if="!loading">
           Active cases in {{ selectedCountry }}
@@ -37,27 +42,31 @@
         <span v-if="loading">Updating...</span>
       </h4>
       <div class="chartContainer">
-        <v-progress-circular
-          v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
-          class="center-loader"
-          :size="45"
-          :width="5"
-          color="white"
-          indeterminate
-        ></v-progress-circular>
-        <TrendChart
-          v-if="activeCases.length > 0 && dates.length > 0"
-          class="chart"
-          :interactive="true"
-          :datasets="[dataset]"
-          :grid="{
-            verticalLines: true,
-            horizontalLines: true
-          }"
-          :min="0"
-          :labels="labels"
-          @mouse-move="onMouseMove"
-        ></TrendChart>
+        <transition name="fade">
+          <v-progress-circular
+            v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
+            class="center-loader"
+            :size="45"
+            :width="5"
+            color="white"
+            indeterminate
+          ></v-progress-circular>
+        </transition>
+        <transition name="fade">
+          <TrendChart
+            v-if="activeCases.length > 0 && dates.length > 0"
+            class="chart"
+            :interactive="true"
+            :datasets="[dataset]"
+            :grid="{
+              verticalLines: true,
+              horizontalLines: true
+            }"
+            :min="0"
+            :labels="labels"
+            @mouse-move="onMouseMove"
+          ></TrendChart>
+        </transition>
       </div>
     </v-layout>
   </div>
