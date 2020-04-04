@@ -14,21 +14,21 @@
                 href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
               >
                 <span>Health Advice</span>
-                <v-icon right>mdi-open-in-new</v-icon>
+                <v-icon right>{{ mdiOpenInNew }}</v-icon>
               </v-btn>
             </div>
 
             <div class="my-3">
               <v-btn :block="true" target=":blank" href="https://www.who.int/health-topics/coronavirus">
                 <span>What is the Coronavirus?</span>
-                <v-icon right>mdi-open-in-new</v-icon>
+                <v-icon right>{{ mdiOpenInNew }}</v-icon>
               </v-btn>
             </div>
 
             <div class="my-3">
               <v-btn :block="true" target=":blank" href="https://www.worldometers.info/coronavirus/">
                 <span>Statistics</span>
-                <v-icon right>mdi-open-in-new</v-icon>
+                <v-icon right>{{ mdiOpenInNew }}</v-icon>
               </v-btn>
             </div>
           </v-card-text>
@@ -45,9 +45,15 @@
 </template>
 
 <script>
+import { mdiOpenInNew } from '@mdi/js'
 import { mapState } from 'vuex'
 
 export default {
+  data() {
+    return {
+      mdiOpenInNew
+    }
+  },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   transition(to, from) {
     if (!from) {

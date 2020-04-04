@@ -30,6 +30,7 @@
     "vue-trend-chart": "^0.15.1"
   },
   "devDependencies": {
+    "@mdi/js": "^5.0.45",
     "@nuxt/typescript-build": "^0.6.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",

@@ -74,7 +74,7 @@ export const mutations = {
     if (filteredDuplicateDates.length > 1) {
       const secondLastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 2].active_cases)
       const lastValue = Number(filteredDuplicateDates[filteredDuplicateDates.length - 1].active_cases)
-      let percentChange = Math.ceil(100 - (secondLastValue * 100) / lastValue)
+      let percentChange = (100 - (secondLastValue * 100) / lastValue).toFixed(1)
       percentChange = (percentChange < 0 ? '' : '+') + percentChange
       state.percentageChange = percentChange
     } else {

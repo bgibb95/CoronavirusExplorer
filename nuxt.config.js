@@ -26,11 +26,11 @@ export default {
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Poppins&display=swap'
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css'
       }
+      // {
+      //   rel: 'stylesheet',
+      //   href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css'
+      // }
     ],
     script: [
       {

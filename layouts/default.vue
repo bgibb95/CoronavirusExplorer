@@ -8,14 +8,14 @@
         </linearGradient>
       </defs>
     </svg>
-    <div class="bg"></div>
+    <div class="bg" :style="{ backgroundImage: 'url(' + backgroundURL + ')' }"></div>
     <v-app dark>
       <v-app-bar dense dark app hide-on-scroll>
-        <v-icon size="large" class="px-1">mdi-lighthouse-on</v-icon>
+        <v-icon class="px-1">{{ mdiLighthouseOn }}</v-icon>
         <h4 class="main-title">Coronavirus Explorer</h4>
         <v-spacer></v-spacer>
         <v-btn icon class="add-button">
-          <v-icon>mdi-file-download-outline</v-icon>
+          <v-icon>{{ mdiFileDownloadOutline }}</v-icon>
         </v-btn>
       </v-app-bar>
 
@@ -28,15 +28,15 @@
       <v-bottom-navigation :fixed="true" app hide-on-scroll grow>
         <v-btn to="/">
           <span>Chart</span>
-          <v-icon>mdi-chart-bell-curve</v-icon>
+          <v-icon>{{ mdiChartBellCurve }}</v-icon>
         </v-btn>
         <v-btn to="/stats">
           <span>Stats</span>
-          <v-icon>mdi-notebook-outline</v-icon>
+          <v-icon>{{ mdiNotebookOutline }}</v-icon>
         </v-btn>
         <v-btn to="/learn">
           <span>Learn</span>
-          <v-icon>mdi-safety-goggles</v-icon>
+          <v-icon>{{ mdiSafetyGoggles }}</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-app>
@@ -44,11 +44,24 @@
 </template>
 
 <script>
+import {
+  mdiChartBellCurve,
+  mdiNotebookOutline,
+  mdiSafetyGoggles,
+  mdiFileDownloadOutline,
+  mdiLighthouseOn
+} from '@mdi/js'
 import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
+      mdiChartBellCurve,
+      mdiNotebookOutline,
+      mdiSafetyGoggles,
+      mdiFileDownloadOutline,
+      mdiLighthouseOn
+      // backgroundURL: null
       // bottomNav: 'recent'
     }
   },
@@ -62,37 +75,58 @@ export default {
     this.$store.dispatch('fetchAffectedCountries')
     this.$store.dispatch('fetchLatestStatByCountry')
     this.$store.dispatch('fetchWorldTotalStat')
+
+    const imageFormat = this.canUseWebP() ? '.webp' : '.jpg'
+    this.backgroundURL = require(`~/assets/background${imageFormat}`)
   },
   mounted() {
-    let deferredPrompt
-    const addBtn = document.querySelector('.add-button')
-    addBtn.style.display = 'none'
+    this.maybeinstallApp()
+  },
+  methods: {
+    maybeinstallApp() {
+      let deferredPrompt
+      const addBtn = document.querySelector('.add-button')
+      addBtn.style.display = 'none'
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      e.preventDefault()
-      // Stash the event so it can be triggered later.
-      deferredPrompt = e
-      // Update UI to notify the user they can add to home screen
-      addBtn.style.display = 'block'
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault()
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e
+        // Update UI to notify the user they can add to home screen
+        addBtn.style.display = 'block'
 
-      addBtn.addEventListener('click', () => {
-        // hide our user interface that shows our A2HS button
-        addBtn.style.display = 'none'
-        // Show the prompt
-        deferredPrompt.prompt()
-        // Wait for the user to respond to the prompt
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt')
-            addBtn.style.display = 'none'
-          } else {
-            console.log('User dismissed the A2HS prompt')
-          }
-          deferredPrompt = null
+        addBtn.addEventListener('click', () => {
+          // hide our user interface that shows our A2HS button
+          addBtn.style.display = 'none'
+          // Show the prompt
+          deferredPrompt.prompt()
+          // Wait for the user to respond to the prompt
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the A2HS prompt')
+              addBtn.style.display = 'none'
+            } else {
+              console.log('User dismissed the A2HS prompt')
+            }
+            deferredPrompt = null
+          })
         })
       })
-    })
+    },
+    canUseWebP() {
+      if (process.client) {
+        const elem = document.createElement('canvas')
+
+        if (elem.getContext && elem.getContext('2d')) {
+          // was able or not to get WebP representation
+          return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
+        }
+
+        // very old browser like IE 8, canvas not supported
+        return false
+      }
+    }
   }
 }
 </script>
@@ -101,14 +135,8 @@ export default {
 // @import '~vuetify/src/styles/styles.sass';
 // @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 //$body-font-family: 'Montserrat' !important;
-$body-font-family: 'Poppins';
-.add-btn {
+.add-button {
   display: none;
-}
-.v-application {
-  font-family: $body-font-family, 'Roboto', sans-serif !important;
-  //font-family: $body-font-family;
-  //letter-spacing: 1px !important;
 }
 h4 {
   font-weight: 100;
@@ -211,7 +239,7 @@ text {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-image: url('../assets/background.jpg');
+  //background-image: url('../assets/background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

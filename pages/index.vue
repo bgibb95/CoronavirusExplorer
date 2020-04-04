@@ -6,6 +6,7 @@
         <v-autocomplete
           v-if="affectedCountries.length > 0"
           v-model="selectedCountry"
+          :append-icon="mdiMenuDown"
           :items="affectedCountries"
           shaped
           dense
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import { mdiMenuDown } from '@mdi/js'
 import { mapState } from 'vuex'
 
 export default {
@@ -79,6 +81,7 @@ export default {
   },
   data() {
     return {
+      mdiMenuDown,
       active_cases: [],
       selectedActiveCases: 0,
       selectedDate: 0,
