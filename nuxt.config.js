@@ -18,8 +18,9 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: 'A web app to view statistics and learn information regarding the Coronavirus / COVID-19'
+      },
+      { hid: 'og:image', name: 'og:image', content: '../icon.png' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
