@@ -8,7 +8,9 @@
         </linearGradient>
       </defs>
     </svg>
-    <div class="bg" :style="{ backgroundImage: 'url(' + backgroundURL + ')' }"></div>
+    <transition name="fade">
+      <div v-if="backgroundURL" class="bg" :style="{ backgroundImage: 'url(' + backgroundURL + ')' }"></div>
+    </transition>
     <v-app dark>
       <v-app-bar dense dark app hide-on-scroll>
         <v-icon class="px-1">{{ mdiLighthouseOn }}</v-icon>
@@ -60,8 +62,8 @@ export default {
       mdiNotebookOutline,
       mdiSafetyGoggles,
       mdiFileDownloadOutline,
-      mdiLighthouseOn
-      // backgroundURL: null
+      mdiLighthouseOn,
+      backgroundURL: null
       // bottomNav: 'recent'
     }
   },
@@ -75,11 +77,13 @@ export default {
     this.$store.dispatch('fetchAffectedCountries')
     this.$store.dispatch('fetchLatestStatByCountry')
     this.$store.dispatch('fetchWorldTotalStat')
-
-    const imageFormat = this.canUseWebP() ? '.webp' : '.jpg'
-    this.backgroundURL = require(`~/assets/background${imageFormat}`)
   },
   mounted() {
+    // eslint-disable-next-line nuxt/no-env-in-hooks
+    if (process.client) {
+      const imageFormat = this.canUseWebP() ? '.webp' : '.jpg'
+      this.backgroundURL = require(`~/assets/background${imageFormat}`)
+    }
     this.maybeinstallApp()
   },
   methods: {
@@ -115,17 +119,15 @@ export default {
       })
     },
     canUseWebP() {
-      if (process.client) {
-        const elem = document.createElement('canvas')
+      const elem = document.createElement('canvas')
 
-        if (elem.getContext && elem.getContext('2d')) {
-          // was able or not to get WebP representation
-          return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
-        }
-
-        // very old browser like IE 8, canvas not supported
-        return false
+      if (elem.getContext && elem.getContext('2d')) {
+        // was able or not to get WebP representation
+        return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
       }
+
+      // very old browser like IE 8, canvas not supported
+      return false
     }
   }
 }
@@ -262,6 +264,13 @@ text {
   100% {
     transform: rotateX(0);
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 .v-bottom-navigation {
