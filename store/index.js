@@ -120,7 +120,7 @@ export const actions = {
       }
     })
       .then((res) => {
-        if (res.data) {
+        if (res.data && res.data.latest_stat_by_country) {
           context.commit('setLatestStatByCountry', res.data.latest_stat_by_country)
         }
       })
@@ -140,7 +140,7 @@ export const actions = {
       }
     })
       .then((res) => {
-        if (res.data) {
+        if (res.data && res.data.stat_by_country) {
           context.commit('setHistoryByCountry', res.data.stat_by_country)
           context.commit('setPercentageChange')
         }
@@ -159,8 +159,9 @@ export const actions = {
       }
     })
       .then((res) => {
-        if (res.data) {
-          context.commit('setAffectedCountries', res.data.affected_countries)
+        if (res.data && res.data.affected_countries) {
+          const filtered = res.data.affected_countries.filter(Boolean) // Remove falsy values
+          context.commit('setAffectedCountries', filtered)
         }
       })
       .catch((err) => {

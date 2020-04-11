@@ -28,7 +28,7 @@
       </transition>
 
       <h4 class="active-cases">
-        <span v-if="!loading">
+        <span v-if="activeCases.length > 0 && dates.length > 0 && !loading">
           Active cases in {{ selectedCountry }}
           <span v-if="selectedActiveCases">
             :
@@ -41,7 +41,7 @@
         </span>
         <span v-if="loading">Updating...</span>
       </h4>
-      <div class="chartContainer">
+      <div v-if="(activeCases.length > 0 && dates.length > 0) || !loading" class="chartContainer">
         <transition name="fade">
           <v-progress-circular
             v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
