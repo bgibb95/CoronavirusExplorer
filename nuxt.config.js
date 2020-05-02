@@ -35,7 +35,7 @@ export default {
     ],
     script: [
       {
-        src: '../scripts/ResizeSensor.min.js'
+        src: './scripts/ResizeSensor.min.js'
       }
     ]
   },
@@ -55,7 +55,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#EF2768' }, // #9AC633
+  loading: { color: '#6A64B8' }, // #9AC633
   /*
    ** Global CSS
    */

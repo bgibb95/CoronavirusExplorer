@@ -209,6 +209,10 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+
+  @media screen and (max-width: 780px) {
+    width: 90%;
+  }
 }
 .percent-change-title {
   margin-bottom: 0 !important;
