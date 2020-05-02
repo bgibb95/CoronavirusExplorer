@@ -37,7 +37,7 @@ export default {
     ],
     script: [
       {
-        src: `..${base}scripts/ResizeSensor.min.js`
+        src: `../..${base}scripts/ResizeSensor.min.js`
       }
     ]
   },
