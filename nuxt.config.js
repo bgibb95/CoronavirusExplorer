@@ -1,5 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
+const base = process.env.NODE_ENV === 'development' ? '/' : '/CoronavirusExplorer/'
+
 export default {
   env: {
     COVID_19_STATS_API_KEY: process.env.COVID_19_STATS_API_KEY
@@ -35,7 +37,7 @@ export default {
     ],
     script: [
       {
-        src: './scripts/ResizeSensor.min.js'
+        src: `..${base}scripts/ResizeSensor.min.js`
       }
     ]
   },
@@ -50,7 +52,7 @@ export default {
   },
 
   router: {
-    base: process.env.NODE_ENV === 'development' ? '' : '/CoronavirusExplorer/'
+    base
   },
   /*
    ** Customize the progress-bar color
