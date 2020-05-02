@@ -50,7 +50,7 @@ export default {
   },
 
   router: {
-    // base: process.env.NODE_ENV === 'development' ? '' : '/NuxtCovid19Tracker/'
+    base: process.env.NODE_ENV === 'development' ? '' : '/NuxtCovid19Tracker/'
   },
   /*
    ** Customize the progress-bar color
