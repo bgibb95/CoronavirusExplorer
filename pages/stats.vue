@@ -23,10 +23,11 @@
 
       <transition name="fade">
         <div v-if="latestCountryStat" class="chartContainer">
-          <h4 class="justify-center">
+          <h3 class="justify-center">
             <span v-if="!countryStatLoading">{{ selectedCountry }}</span>
-            <span v-if="countryStatLoading">Updating...</span>
-          </h4>
+            <span v-if="countryStatLoading">Updating . . .</span>
+          </h3>
+
           <v-row class="stats-row">
             <v-col v-if="latestCountryStat.active_cases" md="2" cols="6">
               <v-card outlined>
@@ -109,10 +110,10 @@
 
       <transition name="fade">
         <div v-if="worldTotalStat" class="chartContainer">
-          <h4 class="justify-center">
+          <h3 class="justify-center">
             <span v-if="!worldStatLoading">Worldwide</span>
-            <span v-if="worldStatLoading">Updating...</span>
-          </h4>
+            <span v-if="worldStatLoading">Updating . . .</span>
+          </h3>
           <v-row class="stats-row">
             <v-col v-if="worldTotalStat.active_cases" md="2" cols="6">
               <v-card outlined>
@@ -291,7 +292,7 @@ export default {
     margin: 4px;
   }
 }
-h4 {
+h3 {
   text-align: center;
   //font-size: 1rem;
   padding-top: 5px !important;

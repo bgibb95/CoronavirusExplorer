@@ -5,7 +5,7 @@
       <v-flex xs12 sm8 md6>
         <div class="text-center"></div>
         <v-card>
-          <h4 class="my-3 text-center">Information and safety</h4>
+          <h3 class="my-3 text-center">Information and safety</h3>
           <v-card-text>
             <div class="my-3">
               <v-btn
@@ -34,7 +34,7 @@
           </v-card-text>
           <transition name="fade">
             <div v-if="maskUsageImage" class="image-container">
-              <h4 class="my-3 text-center">Mask usage tip</h4>
+              <h3 class="my-3 text-center">Mask usage tip</h3>
               <img v-if="maskUsageImage" :src="maskUsageImage" alt />
             </div>
           </transition>

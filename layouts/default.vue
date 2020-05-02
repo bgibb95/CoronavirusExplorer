@@ -9,7 +9,7 @@
       </defs>
     </svg>
     <transition name="fade">
-      <div v-if="backgroundURL" class="bg" :style="{ backgroundImage: 'url(' + backgroundURL + ')' }"></div>
+      <div class="bg"></div>
     </transition>
     <v-app dark>
       <v-app-bar dense dark app hide-on-scroll>
@@ -41,6 +41,9 @@
           <v-icon>{{ mdiSafetyGoggles }}</v-icon>
         </v-btn>
       </v-bottom-navigation>
+      <a class="credit" href="https://www.freepik.com/free-photos-vectors/health" target="_blank"
+        >Image provided by pikisuperstar</a
+      >
     </v-app>
   </div>
 </template>
@@ -62,8 +65,8 @@ export default {
       mdiNotebookOutline,
       mdiSafetyGoggles,
       mdiFileDownloadOutline,
-      mdiLighthouseOn,
-      backgroundURL: null
+      mdiLighthouseOn
+      // backgroundURL: null
       // bottomNav: 'recent'
     }
   },
@@ -80,10 +83,10 @@ export default {
   },
   mounted() {
     // eslint-disable-next-line nuxt/no-env-in-hooks
-    if (process.client) {
-      const imageFormat = this.canUseWebP() ? '.webp' : '.jpg'
-      this.backgroundURL = require(`~/assets/background${imageFormat}`)
-    }
+    // if (process.client) {
+    //   const imageFormat = this.canUseWebP() ? '.webp' : '.jpg'
+    //   this.backgroundURL = require(`~/assets/background${imageFormat}`)
+    // }
     this.maybeinstallApp()
   },
   methods: {
@@ -134,6 +137,31 @@ export default {
 </script>
 
 <style lang="scss">
+.credit {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+  font-size: 10px;
+  text-decoration: none;
+  color: white !important;
+
+  @media screen and (max-width: 780px) {
+    display: none;
+  }
+}
+.v-input {
+  background-color: rgba(#2e2e2e, 0.8);
+  //border-radius: 25px !important;
+}
+// .v-input__slot:before {
+//   border: none !important;
+// }
+// .v-input__slot:after {
+//   border-radius: 25px !important;
+//   //width: 80% !important;
+//   //left: 10% !important;
+// }
 // @import '~vuetify/src/styles/styles.sass';
 // @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 //$body-font-family: 'Montserrat' !important;
@@ -171,7 +199,7 @@ h4 {
 }
 html {
   overflow: auto !important;
-  background: #121212;
+  background: #2e2e2e;
 }
 .v-content__wrap {
   display: flex;
@@ -241,14 +269,14 @@ text {
   position: fixed;
   width: 100%;
   height: 100%;
-  //background-image: url('../assets/background.jpg');
+  background-image: url('../assets/2.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
-  filter: blur(1px);
-  opacity: (0.2);
-  animation: move 20s ease infinite;
+  //filter: brightness(50%);
+  opacity: (0.7);
+  //animation: move 50s ease infinite;
   @media screen and (max-width: 780px) {
     //opacity: (0.15);
     filter: blur(0px);

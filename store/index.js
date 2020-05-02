@@ -1,6 +1,7 @@
 export const state = () => ({
   casesByCountry: [],
   historyByCountry: [],
+  historyByCountryLoading: false,
   affectedCountries: [],
   latestCountryStat: [],
   selectedCountry: 'South Africa',
@@ -12,6 +13,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  setHistoryByCountryLoading(state, boolean) {
+    state.historyByCountryLoading = boolean
+  },
   setIsMaskUsageImageFetched(state, boolean) {
     state.isMaskUsageImageFetched = boolean
   },
@@ -129,6 +133,7 @@ export const actions = {
       })
   },
   fetchCasesByCountry(context) {
+    context.commit('setHistoryByCountryLoading', true)
     return this.$axios({
       method: 'get',
       url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php?country=${encodeURI(
@@ -147,6 +152,9 @@ export const actions = {
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(() => {
+        context.commit('setHistoryByCountryLoading', false)
       })
   },
   fetchAffectedCountries(context) {

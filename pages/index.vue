@@ -27,7 +27,7 @@
         </h5>
       </transition>
 
-      <h4 class="active-cases">
+      <h3 class="active-cases">
         <span v-if="activeCases.length > 0 && dates.length > 0 && !loading">
           Active cases in {{ selectedCountry }}
           <span v-if="selectedActiveCases">
@@ -39,12 +39,25 @@
             <span>{{ selectedDate }}</span>
           </span>
         </span>
-        <span v-if="loading">Updating...</span>
-      </h4>
+        <span v-if="loading">Updating . . .</span>
+      </h3>
+
       <div v-if="(activeCases.length > 0 && dates.length > 0) || !loading" class="chartContainer">
         <transition name="fade">
+          <div v-if="!activeCases.length > 0 && !dates.length > 0 && !historyByCountryLoading" class="centerVH">
+            <!-- <v-icon>{{ mdiAlertCircle }}</v-icon> -->
+            <br />
+            <h3>
+              Sorry, the history data is currently unavailable.
+              <br />Try again soon. <br />
+              <br />
+              <nuxt-link to="/stats">View stats instead</nuxt-link>
+            </h3>
+          </div>
+        </transition>
+        <transition name="fade">
           <v-progress-circular
-            v-if="!activeCases.length > 0 || !dates.length > 0 || loading"
+            v-if="historyByCountryLoading"
             class="center-loader"
             :size="45"
             :width="5"
@@ -181,6 +194,7 @@ export default {
     },
     ...mapState({
       historyByCountry: (state) => state.historyByCountry,
+      historyByCountryLoading: (state) => state.historyByCountryLoading,
       affectedCountries: (state) => state.affectedCountries,
       percentageChange: (state) => state.percentageChange
     })
@@ -189,6 +203,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.centerVH {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 .percent-change-title {
   margin-bottom: 0 !important;
 }
