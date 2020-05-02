@@ -50,7 +50,7 @@ export default {
   },
 
   router: {
-    base: process.env.NODE_ENV === 'development' ? '' : '/CoronaVirusExplorer/'
+    base: process.env.NODE_ENV === 'development' ? '' : '/CoronavirusExplorer/'
   },
   /*
    ** Customize the progress-bar color
