@@ -55,9 +55,14 @@ export const mutations = {
         .reverse()
     }
 
+    // Sort by date
+    historyByCountry.sort((a, b) => {
+      return new Date(convertDigitIn(a.record_date)) - new Date(convertDigitIn(b.record_date))
+    })
+
     // Reduce array size if over maxLength
     if (historyByCountry.length > maxLength) {
-      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 1))
+      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 0))
     }
 
     function convertDigitIn(str) {
@@ -66,11 +71,6 @@ export const mutations = {
         .reverse()
         .join('/')
     }
-
-    // Sort by date
-    historyByCountry.sort((a, b) => {
-      return new Date(convertDigitIn(a.record_date)) - new Date(convertDigitIn(b.record_date))
-    })
 
     // Remove year
     historyByCountry = historyByCountry.map((history) => {
