@@ -140,6 +140,7 @@ export default {
 <style lang="scss">
 .v-card {
   //background-color: #1e1e1e !important;
+  border: none !important;
   background-color: rgba(#2e2e2e, 1) !important;
   border-radius: 8px !important;
 }
@@ -159,7 +160,7 @@ export default {
 .v-input {
   background-color: rgba(#2e2e2e, 1);
   //background-color: #1e1e1e !important;
-  border: 1px solid rgba(white, 0.7);
+  border: 0px solid rgba(white, 0.7);
   border-bottom-left-radius: 5px !important;
   border-bottom-right-radius: 5px !important;
   //border-radius: 25px !important;

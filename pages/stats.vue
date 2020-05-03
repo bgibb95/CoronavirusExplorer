@@ -23,10 +23,10 @@
 
       <transition name="fade">
         <div v-if="latestCountryStat" class="chartContainer">
-          <h3 class="justify-center">
+          <h4 class="justify-center">
             <span v-if="!countryStatLoading">{{ selectedCountry }}</span>
-            <span v-if="countryStatLoading">Updating . . .</span>
-          </h3>
+            <span v-if="countryStatLoading">Updating...</span>
+          </h4>
 
           <v-row class="stats-row">
             <v-col v-if="latestCountryStat.active_cases" md="2" cols="6">
@@ -110,10 +110,10 @@
 
       <transition name="fade">
         <div v-if="worldTotalStat" class="chartContainer">
-          <h3 class="justify-center">
+          <h4 class="justify-center">
             <span v-if="!worldStatLoading">Worldwide</span>
-            <span v-if="worldStatLoading">Updating . . .</span>
-          </h3>
+            <span v-if="worldStatLoading">Updating...</span>
+          </h4>
           <v-row class="stats-row">
             <v-col v-if="worldTotalStat.active_cases" md="2" cols="6">
               <v-card outlined>
@@ -259,9 +259,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h3 {
+h4 {
   background-color: rgba(#2e2e2e, 1);
-  border: 1px solid rgba(white, 0.5);
+  border: 0px solid rgba(white, 0.5);
   border-radius: 8px;
   padding: 8px;
   width: max-content;
@@ -294,20 +294,20 @@ h3 {
 .v-card {
   margin: 8px;
   text-align: center;
-  border: 1px solid rgba(white, 0.5) !important;
+  border: 0px solid rgba(white, 0.5) !important;
   background-color: rgba(#2e2e2e, 0.8);
   @media screen and (max-width: 780px) {
     margin: 4px;
   }
 }
-h3 {
+h4 {
   text-align: center;
   //font-size: 1rem;
   padding-top: 5px !important;
   padding-bottom: 5px;
   margin: 12px auto;
   @media screen and (max-width: 780px) {
-    margin: auto;
+    margin: 0px auto 4px;
     //padding-top: 0 !important;
   }
 }

@@ -5,7 +5,7 @@
       <v-flex xs12 sm8 md6>
         <div class="text-center"></div>
         <v-card>
-          <h3 class="my-3 text-center">Information and safety</h3>
+          <h4 class="my-3 text-center">Information and safety</h4>
           <v-card-text>
             <div class="my-3">
               <v-btn
@@ -34,7 +34,7 @@
           </v-card-text>
           <transition name="fade">
             <div v-if="maskUsageImage" class="image-container">
-              <h3 class="my-3 text-center">Mask usage tip</h3>
+              <h4 class="my-3 text-center">Mask usage tip</h4>
               <img v-if="maskUsageImage" :src="maskUsageImage" alt />
             </div>
           </transition>
@@ -108,7 +108,7 @@ export default {
 .v-card {
   //height: 100% !important;
   display: inline-block;
-  border: 1px solid rgba(white, 0.7);
+  border: 0px solid rgba(white, 0.7) !important;
   background-color: rgba(#2e2e2e, 0.8);
 }
 span {
@@ -127,7 +127,7 @@ a {
   img {
     width: 100%;
     border-radius: 4px;
-    border: 1px solid rgba(white, 0.7);
+    border: 0 solid rgba(white, 0.7);
   }
 }
 </style>

@@ -27,7 +27,7 @@
         </h5>
       </transition>
 
-      <h4 class="active-cases">
+      <h4 class="active-cases" :class="{ hideBg: !activeCases.length > 0 && !historyByCountryLoading }">
         <span v-if="activeCases.length > 0 && dates.length > 0 && !historyByCountryLoading">
           Active cases in {{ selectedCountry }}
           <span v-if="selectedActiveCases">
@@ -39,7 +39,7 @@
             <span>{{ selectedDate }}</span>
           </span>
         </span>
-        <span v-if="historyByCountryLoading">Updating . . .</span>
+        <span v-if="historyByCountryLoading">Updating...</span>
       </h4>
 
       <div
@@ -51,13 +51,13 @@
           <div v-if="!activeCases.length > 0 && !dates.length > 0 && !historyByCountryLoading" class="centerVH">
             <!-- <v-icon>{{ mdiAlertCircle }}</v-icon> -->
             <br />
-            <h3>
+            <h4>
               Sorry, the history data is currently unavailable.
               <br />Try again soon.
               <br />
               <br />
               <nuxt-link to="/stats">View stats instead</nuxt-link>
-            </h3>
+            </h4>
           </div>
         </transition>
         <transition name="fade">
@@ -212,12 +212,12 @@ export default {
 h4,
 h5 {
   background-color: rgba(#2e2e2e, 1);
-  border: 1px solid rgba(white, 0.7);
+  //border: 1px solid rgba(white, 0.7);
   border-radius: 8px;
   padding: 8px;
 }
 .hideBg {
-  border: 1px solid transparent !important;
+  border: 0px solid transparent !important;
   background: none !important;
 }
 .centerVH {
@@ -255,7 +255,7 @@ h5 {
   position: relative;
   width: 100%;
   height: 58vh;
-  border: 1px solid rgba(white, 0.7);
+  border: 0px solid rgba(white, 0.7);
   background-color: rgba(#2e2e2e, 1);
   padding: 2%;
   border-radius: 8px;
