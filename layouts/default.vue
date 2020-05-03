@@ -80,6 +80,7 @@ export default {
     this.$store.dispatch('fetchAffectedCountries')
     this.$store.dispatch('fetchLatestStatByCountry')
     this.$store.dispatch('fetchWorldTotalStat')
+    this.$store.dispatch('fetchRandomMaskUsageInstructions')
   },
   mounted() {
     // eslint-disable-next-line nuxt/no-env-in-hooks
@@ -137,6 +138,11 @@ export default {
 </script>
 
 <style lang="scss">
+.v-card {
+  //background-color: #1e1e1e !important;
+  background-color: rgba(#2e2e2e, 1) !important;
+  border-radius: 8px !important;
+}
 .credit {
   position: absolute;
   bottom: 10px;
@@ -151,7 +157,11 @@ export default {
   }
 }
 .v-input {
-  background-color: rgba(#2e2e2e, 0.8);
+  background-color: rgba(#2e2e2e, 1);
+  //background-color: #1e1e1e !important;
+  border: 1px solid rgba(white, 0.7);
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
   //border-radius: 25px !important;
 }
 // .v-input__slot:before {
@@ -181,7 +191,7 @@ h4 {
   //display: flex;
   //align-content: center;
   position: absolute;
-  padding: 15px 12px;
+  padding: 12px;
   //padding-bottom: 15px;
   width: 100%;
   //height: 100%;
@@ -236,7 +246,7 @@ text {
   .fill {
     fill: url(#gradientFill);
     //fill: #fff9f9;
-    opacity: 0.5;
+    opacity: 0.7;
     //fill: #eef0ed;
   }
   .point {
@@ -275,7 +285,7 @@ text {
   background-position: center center;
   background-attachment: fixed;
   //filter: brightness(50%);
-  opacity: (0.7);
+  //opacity: (1);
   //animation: move 50s ease infinite;
   @media screen and (max-width: 780px) {
     //opacity: (0.15);

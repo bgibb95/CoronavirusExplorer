@@ -117,6 +117,7 @@ export default {
       name: 'Coronavirus Explorer',
       short_name: 'Coronavirus Explorer',
       background_color: '#212121',
+      theme_color: '#212121',
       description: 'A web app to track statistics of the Coronavirus (COVID-19)'
     }
   },

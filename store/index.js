@@ -31,12 +31,13 @@ export const mutations = {
       historyByCountry = newHistoryByCountry
     }
 
+    // String formatting
     historyByCountry = historyByCountry.map((history) => {
       return {
         active_cases: history.active_cases.replace(',', ''),
         record_date: `${new Date(history.record_date.replace(/ /g, 'T')).getDate()}/${Number(
           new Date(history.record_date.replace(/ /g, 'T')).getMonth()
-        ) + 1} `
+        ) + 1}/${Number(new Date(history.record_date.replace(/ /g, 'T')).getFullYear())}`
       }
     })
 
@@ -46,6 +47,7 @@ export const mutations = {
       maxLength = 80
     }
 
+    // Reduce to one data point per day
     if (historyByCountry.length > 6) {
       historyByCountry = historyByCountry
         .reverse()
@@ -53,9 +55,31 @@ export const mutations = {
         .reverse()
     }
 
+    // Reduce array size if over maxLength
     if (historyByCountry.length > maxLength) {
       historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 1))
     }
+
+    function convertDigitIn(str) {
+      return str
+        .split('/')
+        .reverse()
+        .join('/')
+    }
+
+    // Sort by date
+    historyByCountry.sort((a, b) => {
+      return new Date(convertDigitIn(a.record_date)) - new Date(convertDigitIn(b.record_date))
+    })
+
+    // Remove year
+    historyByCountry = historyByCountry.map((history) => {
+      return {
+        active_cases: history.active_cases,
+        record_date: history.record_date.slice(0, -5)
+      }
+    })
+
     state.historyByCountry = historyByCountry
   },
   setAffectedCountries(state, affectedCountries) {
@@ -177,35 +201,35 @@ export const actions = {
       })
   },
   fetchRandomMaskUsageInstructions(context) {
-    if (!context.state.isMaskUsageImageFetched) {
-      this.$axios({
-        responseType: 'blob',
-        method: 'get',
-        url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/random_masks_usage_instructions.php',
-        headers: {
-          'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
-          'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
-        }
-      })
-        .then((res) => {
-          function blobToDataUrl(blob) {
-            return new Promise((resolve) => {
-              if (process.client) {
-                const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
-                reader.onload = (e) => resolve(e.target.result)
-                reader.readAsDataURL(blob)
-              }
-            })
-          }
-
-          blobToDataUrl(res.data).then((url) => {
-            context.commit('setMaskUsageImage', url)
+    // if (!context.state.isMaskUsageImageFetched) {
+    this.$axios({
+      responseType: 'blob',
+      method: 'get',
+      url: 'https://coronavirus-monitor.p.rapidapi.com/coronavirus/random_masks_usage_instructions.php',
+      headers: {
+        'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
+        'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
+      }
+    })
+      .then((res) => {
+        function blobToDataUrl(blob) {
+          return new Promise((resolve) => {
+            if (process.client) {
+              const reader = new FileReader() // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+              reader.onload = (e) => resolve(e.target.result)
+              reader.readAsDataURL(blob)
+            }
           })
+        }
+
+        blobToDataUrl(res.data).then((url) => {
+          context.commit('setMaskUsageImage', url)
         })
-        .catch((err) => {
-          console.log(err)
-        })
-      context.commit('setIsMaskUsageImageFetched', true)
-    }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    // context.commit('setIsMaskUsageImageFetched', true)
+    // }
   }
 }

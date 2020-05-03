@@ -73,7 +73,6 @@ export default {
     new ResizeSensor(element, () => {
       this.$store.commit('setPageHeight', element.offsetHeight + 10)
     })
-    this.$store.dispatch('fetchRandomMaskUsageInstructions')
   },
   computed: {
     ...mapState({
@@ -109,26 +108,26 @@ export default {
 .v-card {
   //height: 100% !important;
   display: inline-block;
-  border: 1px solid rgba(white, 0.3);
+  border: 1px solid rgba(white, 0.7);
   background-color: rgba(#2e2e2e, 0.8);
 }
 span {
   font-size: 0.75rem !important;
 }
 a {
-  border: 1px solid rgba(white, 0.3) !important;
+  border: 1px solid rgba(white, 0.7) !important;
 }
 .image-container {
   max-width: 250px;
   //background: yellow;
   //height: 200px;
   display: block;
-  margin: 0px auto 20px;
+  margin: 0px auto 12px;
 
   img {
     width: 100%;
     border-radius: 4px;
-    border: 1px solid rgba(white, 0.3);
+    border: 1px solid rgba(white, 0.7);
   }
 }
 </style>

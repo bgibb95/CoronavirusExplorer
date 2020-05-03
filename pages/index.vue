@@ -19,16 +19,16 @@
       </v-row>
 
       <transition name="fade">
-        <h5 v-if="percentageChange" class="my-3 percent-change-title">
-          <span v-if="!loading">
+        <h5 v-if="percentageChange" class="my-3 percent-change-title" :class="{ hideBg: historyByCountryLoading }">
+          <span v-if="!historyByCountryLoading">
             <span :class="percentClass">{{ percentageChange }}%</span> over previous day
           </span>
-          <span v-if="loading">&nbsp;</span>
+          <span v-if="historyByCountryLoading">&nbsp;</span>
         </h5>
       </transition>
 
-      <h3 class="active-cases">
-        <span v-if="activeCases.length > 0 && dates.length > 0 && !loading">
+      <h4 class="active-cases">
+        <span v-if="activeCases.length > 0 && dates.length > 0 && !historyByCountryLoading">
           Active cases in {{ selectedCountry }}
           <span v-if="selectedActiveCases">
             :
@@ -39,17 +39,22 @@
             <span>{{ selectedDate }}</span>
           </span>
         </span>
-        <span v-if="loading">Updating . . .</span>
-      </h3>
+        <span v-if="historyByCountryLoading">Updating . . .</span>
+      </h4>
 
-      <div v-if="(activeCases.length > 0 && dates.length > 0) || !loading" class="chartContainer">
+      <div
+        v-if="(activeCases.length > 0 && dates.length > 0) || !loading"
+        class="chartContainer"
+        :class="{ hideBg: historyByCountryLoading }"
+      >
         <transition name="fade">
           <div v-if="!activeCases.length > 0 && !dates.length > 0 && !historyByCountryLoading" class="centerVH">
             <!-- <v-icon>{{ mdiAlertCircle }}</v-icon> -->
             <br />
             <h3>
               Sorry, the history data is currently unavailable.
-              <br />Try again soon. <br />
+              <br />Try again soon.
+              <br />
               <br />
               <nuxt-link to="/stats">View stats instead</nuxt-link>
             </h3>
@@ -69,6 +74,7 @@
           <TrendChart
             v-if="activeCases.length > 0 && dates.length > 0"
             class="chart"
+            :class="{ zeroOpacity: historyByCountryLoading }"
             :interactive="true"
             :datasets="[dataset]"
             :grid="{
@@ -203,6 +209,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h4,
+h5 {
+  background-color: rgba(#2e2e2e, 1);
+  border: 1px solid rgba(white, 0.7);
+  border-radius: 8px;
+  padding: 8px;
+}
+.hideBg {
+  border: 1px solid transparent !important;
+  background: none !important;
+}
 .centerVH {
   position: absolute;
   left: 50%;
@@ -237,13 +254,21 @@ export default {
 .chartContainer {
   position: relative;
   width: 100%;
-  height: 62vh;
-  border: 1px solid rgba(white, 0.3);
-  background-color: rgba(#2e2e2e, 0.8);
+  height: 58vh;
+  border: 1px solid rgba(white, 0.7);
+  background-color: rgba(#2e2e2e, 1);
   padding: 2%;
   border-radius: 8px;
+  transition: background-color 0.4s ease, border 0.4s ease;
   @media screen and (max-width: 780px) {
-    height: 60vh;
+    height: 54vh;
   }
+}
+.chart {
+  opacity: 1;
+  transition: all 0.4s ease;
+}
+.zeroOpacity {
+  opacity: 0;
 }
 </style>
