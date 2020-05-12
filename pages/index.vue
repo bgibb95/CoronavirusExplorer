@@ -21,7 +21,10 @@
       <transition name="fade">
         <h5 v-if="percentageChange" class="my-3 percent-change-title" :class="{ hideBg: historyByCountryLoading }">
           <span v-if="!historyByCountryLoading">
-            <span :class="percentClass">{{ percentageChange }}%</span> over previous day
+            <span :class="percentClass">
+              <b>{{ percentageChange }}%</b>
+            </span>
+            over previous day
           </span>
           <span v-if="historyByCountryLoading">&nbsp;</span>
         </h5>
@@ -215,6 +218,7 @@ h5 {
   //border: 1px solid rgba(white, 0.7);
   border-radius: 8px;
   padding: 8px;
+  font-weight: normal;
 }
 .hideBg {
   border: 0px solid transparent !important;

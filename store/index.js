@@ -34,7 +34,7 @@ export const mutations = {
     // String formatting
     historyByCountry = historyByCountry.map((history) => {
       return {
-        active_cases: history.active_cases.replace(',', ''),
+        active_cases: history.active_cases.split(',').join(''),
         record_date: `${new Date(history.record_date.replace(/ /g, 'T')).getDate()}/${Number(
           new Date(history.record_date.replace(/ /g, 'T')).getMonth()
         ) + 1}/${Number(new Date(history.record_date.replace(/ /g, 'T')).getFullYear())}`
