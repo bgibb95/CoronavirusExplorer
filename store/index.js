@@ -80,6 +80,11 @@ export const mutations = {
       }
     })
 
+    // Filter out non numerical values
+    historyByCountry = historyByCountry.filter((el) => {
+      return !isNaN(el.active_cases)
+    })
+
     state.historyByCountry = historyByCountry
   },
   setAffectedCountries(state, affectedCountries) {
