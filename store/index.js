@@ -1,5 +1,7 @@
 export const state = () => ({
   casesByCountry: [],
+  historyByCountryFullRaw: [],
+  showAllHistory: false,
   historyByCountry: [],
   historyByCountryLoading: false,
   affectedCountries: [],
@@ -13,6 +15,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  setShowAllHistory(state, boolean) {
+    state.showAllHistory = boolean
+  },
   setHistoryByCountryLoading(state, boolean) {
     state.historyByCountryLoading = boolean
   },
@@ -22,7 +27,7 @@ export const mutations = {
   setCasesByCountry(state, casesByCountry) {
     state.casesByCountry = casesByCountry
   },
-  setHistoryByCountry(state, historyByCountry) {
+  setHistoryByCountryFullRaw(state, historyByCountry) {
     const newHistoryByCountry = historyByCountry.filter(
       (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
     )
@@ -30,6 +35,20 @@ export const mutations = {
     if (newHistoryByCountry.length > 1) {
       historyByCountry = newHistoryByCountry
     }
+    state.historyByCountryFullRaw = historyByCountry
+  },
+  setHistoryByCountry(state, history) {
+    let historyByCountry = history || state.historyByCountryFullRaw
+
+    const newHistoryByCountry = historyByCountry.filter(
+      (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
+    )
+
+    if (newHistoryByCountry.length > 1) {
+      historyByCountry = newHistoryByCountry
+    }
+
+    state.historyByCountryFullRaw = historyByCountry
 
     // String formatting
     historyByCountry = historyByCountry.map((history) => {
@@ -44,7 +63,7 @@ export const mutations = {
     let maxLength = 30
 
     if (process.client && window.innerWidth >= 768) {
-      maxLength = 80
+      maxLength = 60
     }
 
     // Reduce to one data point per day
@@ -61,7 +80,7 @@ export const mutations = {
     })
 
     // Reduce array size if over maxLength
-    if (historyByCountry.length > maxLength) {
+    if (historyByCountry.length > maxLength && !state.showAllHistory) {
       historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 0))
     }
 
@@ -177,6 +196,7 @@ export const actions = {
         if (res.data && res.data.stat_by_country) {
           context.commit('setHistoryByCountry', res.data.stat_by_country)
           context.commit('setPercentageChange')
+          // context.commit('setHistoryByCountryFullRaw', res.data.stat_by_country)
         }
       })
       .catch((err) => {

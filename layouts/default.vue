@@ -19,6 +19,23 @@
         <v-btn icon class="add-button">
           <v-icon>{{ mdiFileDownloadOutline }}</v-icon>
         </v-btn>
+
+        <v-menu v-if="$nuxt.$route.name === 'index'" bottom left>
+          <template v-slot:activator="{ on }">
+            <v-btn dark icon v-on="on">
+              <v-icon>{{ mdiDotsVertical }}</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item v-for="(item, i) in items" :key="i" @click="filterHistory(item.all)">
+              <v-list-item-title>
+                <b v-if="item.all === showAllHistory">{{ item.title }}</b>
+                <span v-else>{{ item.title }}</span>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
 
       <v-content>
@@ -54,7 +71,8 @@ import {
   mdiNotebookOutline,
   mdiSafetyGoggles,
   mdiFileDownloadOutline,
-  mdiLighthouseOn
+  mdiLighthouseOn,
+  mdiDotsVertical
 } from '@mdi/js'
 import { mapState } from 'vuex'
 
@@ -65,14 +83,20 @@ export default {
       mdiNotebookOutline,
       mdiSafetyGoggles,
       mdiFileDownloadOutline,
-      mdiLighthouseOn
+      mdiLighthouseOn,
+      mdiDotsVertical,
+      items: [
+        { title: 'Recent history', all: false },
+        { title: 'All history', all: true }
+      ]
       // backgroundURL: null
       // bottomNav: 'recent'
     }
   },
   computed: {
     ...mapState({
-      pageHeight: (state) => state.pageHeight + 'px'
+      pageHeight: (state) => state.pageHeight + 'px',
+      showAllHistory: (state) => state.showAllHistory
     })
   },
   created() {
@@ -91,6 +115,12 @@ export default {
     this.maybeinstallApp()
   },
   methods: {
+    filterHistory(showAll) {
+      if (showAll !== this.showAllHistory) {
+        this.$store.commit('setShowAllHistory', showAll)
+        this.$store.commit('setHistoryByCountry')
+      }
+    },
     maybeinstallApp() {
       let deferredPrompt
       const addBtn = document.querySelector('.add-button')
