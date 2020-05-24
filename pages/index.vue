@@ -152,6 +152,9 @@ export default {
     }
   },
   computed: {
+    historyByCountry() {
+      return this.showAllHistory ? this.historyByCountryFull : this.historyByCountryRecent
+    },
     percentClass() {
       return this.percentageChange > 0 ? 'red--text text--lighten-2' : 'green--text text--lighten-2'
     },
@@ -202,10 +205,12 @@ export default {
       }
     },
     ...mapState({
-      historyByCountry: (state) => state.historyByCountry,
+      historyByCountryRecent: (state) => state.historyByCountry,
+      historyByCountryFull: (state) => state.historyByCountryFull,
       historyByCountryLoading: (state) => state.historyByCountryLoading,
       affectedCountries: (state) => state.affectedCountries,
-      percentageChange: (state) => state.percentageChange
+      percentageChange: (state) => state.percentageChange,
+      showAllHistory: (state) => state.showAllHistory
     })
   }
 }

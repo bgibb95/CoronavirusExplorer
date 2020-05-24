@@ -1,6 +1,6 @@
 export const state = () => ({
   casesByCountry: [],
-  historyByCountryFullRaw: [],
+  historyByCountryFull: [],
   showAllHistory: false,
   historyByCountry: [],
   historyByCountryLoading: false,
@@ -27,18 +27,8 @@ export const mutations = {
   setCasesByCountry(state, casesByCountry) {
     state.casesByCountry = casesByCountry
   },
-  setHistoryByCountryFullRaw(state, historyByCountry) {
-    const newHistoryByCountry = historyByCountry.filter(
-      (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
-    )
-
-    if (newHistoryByCountry.length > 1) {
-      historyByCountry = newHistoryByCountry
-    }
-    state.historyByCountryFullRaw = historyByCountry
-  },
   setHistoryByCountry(state, history) {
-    let historyByCountry = history || state.historyByCountryFullRaw
+    let historyByCountry = history
 
     const newHistoryByCountry = historyByCountry.filter(
       (a, b, c) => c.findIndex((t) => t.active_cases === a.active_cases) === b
@@ -47,8 +37,6 @@ export const mutations = {
     if (newHistoryByCountry.length > 1) {
       historyByCountry = newHistoryByCountry
     }
-
-    state.historyByCountryFullRaw = historyByCountry
 
     // String formatting
     historyByCountry = historyByCountry.map((history) => {
@@ -59,12 +47,6 @@ export const mutations = {
         ) + 1}/${Number(new Date(history.record_date.replace(/ /g, 'T')).getFullYear())}`
       }
     })
-
-    let maxLength = 30
-
-    if (process.client && window.innerWidth >= 768) {
-      maxLength = 60
-    }
 
     // Reduce to one data point per day
     if (historyByCountry.length > 6) {
@@ -78,11 +60,6 @@ export const mutations = {
     historyByCountry.sort((a, b) => {
       return new Date(convertDigitIn(a.record_date)) - new Date(convertDigitIn(b.record_date))
     })
-
-    // Reduce array size if over maxLength
-    if (historyByCountry.length > maxLength && !state.showAllHistory) {
-      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 0))
-    }
 
     function convertDigitIn(str) {
       return str
@@ -103,6 +80,19 @@ export const mutations = {
     historyByCountry = historyByCountry.filter((el) => {
       return !isNaN(el.active_cases)
     })
+
+    state.historyByCountryFull = historyByCountry
+
+    // Reduce array size if over maxLength
+    let maxLength = 30
+
+    if (process.client && window.innerWidth >= 768) {
+      maxLength = 60
+    }
+
+    if (historyByCountry.length > maxLength) {
+      historyByCountry = historyByCountry.slice(Math.max(historyByCountry.length - maxLength, 0))
+    }
 
     state.historyByCountry = historyByCountry
   },

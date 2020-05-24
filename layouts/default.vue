@@ -118,7 +118,7 @@ export default {
     filterHistory(showAll) {
       if (showAll !== this.showAllHistory) {
         this.$store.commit('setShowAllHistory', showAll)
-        this.$store.commit('setHistoryByCountry')
+        // this.$store.commit('setHistoryByCountry')
       }
     },
     maybeinstallApp() {
