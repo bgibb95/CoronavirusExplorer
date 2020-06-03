@@ -146,9 +146,10 @@ export default {
         return
       }
       this.selectedActiveCases = this.numberWithSpaces(params.data[0])
-      this.selectedDate = this.historyByCountry.find(
-        (history) => Number(history.active_cases) === params.data[0]
-      ).record_date
+      this.selectedDate = this.historyByCountry.find((history) => Number(history.Active) === params.data[0]).Date
+      // this.selectedDate = this.historyByCountry.find(
+      //   (history) => Number(history.active_cases) === params.data[0]
+      // ).record_date
     }
   },
   computed: {
@@ -175,15 +176,12 @@ export default {
     },
     dates() {
       if (this.historyByCountry.length > 6) {
-        return [
-          this.historyByCountry[0].record_date,
-          this.historyByCountry[this.historyByCountry.length - 1].record_date
-        ]
+        return [this.historyByCountry[0].Date, this.historyByCountry[this.historyByCountry.length - 1].Date]
       }
-      return this.historyByCountry.map((history) => history.record_date)
+      return this.historyByCountry.map((history) => history.Date)
     },
     activeCases() {
-      return this.historyByCountry.map((history) => Number(history.active_cases))
+      return this.historyByCountry.map((history) => Number(history.Active))
     },
     five() {
       return this.activeCases.filter((a, b) => this.activeCases.indexOf(a) === b)
@@ -208,7 +206,7 @@ export default {
       historyByCountryRecent: (state) => state.historyByCountry,
       historyByCountryFull: (state) => state.historyByCountryFull,
       historyByCountryLoading: (state) => state.historyByCountryLoading,
-      affectedCountries: (state) => state.affectedCountries,
+      affectedCountries: (state) => state.countries.map((country) => country.name),
       percentageChange: (state) => state.percentageChange,
       showAllHistory: (state) => state.showAllHistory
     })

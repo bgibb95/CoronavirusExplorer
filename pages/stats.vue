@@ -34,9 +34,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Active cases</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
-                      latestCountryStat.active_cases
-                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ latestCountryStat.active_cases }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -47,9 +47,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Total cases</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
-                      latestCountryStat.total_cases
-                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ latestCountryStat.total_cases }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -60,9 +60,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Total deaths</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">
-                      {{ latestCountryStat.total_deaths }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
+                      latestCountryStat.total_deaths
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -73,9 +73,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">
-                      {{ latestCountryStat.total_recovered }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
+                      latestCountryStat.total_recovered
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -86,9 +86,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">
-                      {{ latestCountryStat.serious_critical }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
+                      latestCountryStat.serious_critical
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -120,9 +120,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Active cases</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
-                      worldTotalStat.active_cases
-                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
+                      {{ worldTotalStat.active_cases }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -133,9 +133,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Total cases</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">
-                      {{ worldTotalStat.total_cases }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 blue--text text--lighten-3">{{
+                      worldTotalStat.total_cases
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -146,9 +146,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title>Total deaths</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">
-                      {{ worldTotalStat.total_deaths }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 red--text text--lighten-3">{{
+                      worldTotalStat.total_deaths
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -159,9 +159,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Total recovered</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">
-                      {{ worldTotalStat.total_recovered }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 green--text text--lighten-3">{{
+                      worldTotalStat.total_recovered
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -172,9 +172,9 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="mb-1">Serious condition</v-list-item-title>
-                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">
-                      {{ worldTotalStat.serious_critical }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mb-1 amber--text text--lighten-3">{{
+                      worldTotalStat.serious_critical
+                    }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -241,7 +241,7 @@ export default {
       }
     },
     ...mapState({
-      affectedCountries: (state) => state.affectedCountries,
+      affectedCountries: (state) => state.countries.map((country) => country.name),
       latestCountryStat: (state) => state.latestCountryStat[0],
       worldTotalStat: (state) => state.worldTotalStat
     })

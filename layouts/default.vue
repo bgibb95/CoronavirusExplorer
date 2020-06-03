@@ -101,7 +101,7 @@ export default {
   },
   created() {
     this.$store.dispatch('fetchCasesByCountry')
-    this.$store.dispatch('fetchAffectedCountries')
+    // this.$store.dispatch('fetchCountries')
     this.$store.dispatch('fetchLatestStatByCountry')
     this.$store.dispatch('fetchWorldTotalStat')
     this.$store.dispatch('fetchRandomMaskUsageInstructions')
