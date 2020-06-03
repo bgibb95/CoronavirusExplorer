@@ -248,6 +248,21 @@ export const mutations = {
     state.countries = countries
   },
   setAffectedCountries(state, affectedCountries) {
+    affectedCountries = affectedCountries.map((country) => {
+      const isoCode = Object.keys(country)[0]
+      const matchingCountry = state.countries.find((obj) => {
+        return obj['alpha-3'] === isoCode
+      })
+      if (matchingCountry) {
+        return {
+          name: matchingCountry.name,
+          confirmed: country[isoCode].confirmed,
+          deaths: country[isoCode].deaths,
+          recovered: country[isoCode].recovered
+        }
+      }
+    })
+    affectedCountries.sort((a, b) => (a.name > b.name ? 1 : -1))
     state.affectedCountries = affectedCountries
   },
   setSelectedCountry(state, selectedCountry) {
@@ -341,9 +356,7 @@ export const actions = {
     })
     return this.$axios({
       method: 'get',
-      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_iso_alpha_3.php?alpha3=${encodeURI(
-        isoCode
-      )}`,
+      url: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_iso_alpha_3.php?alpha3=${encodeURI(isoCode)}`,
       headers: {
         'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',
         'x-rapidapi-key': process.env.COVID_19_STATS_API_KEY
@@ -461,6 +474,21 @@ export const actions = {
   //       console.log(err)
   //     })
   // },
+  fetchAffectedCountries(context) {
+    this.$axios({
+      method: 'get',
+      url: 'https://covidapi.info/api/v1/global/latest'
+    })
+      .then((res) => {
+        if (res.data && res.data.result) {
+          const filtered = res.data.result.filter(Boolean) // Remove falsy values
+          context.commit('setAffectedCountries', filtered)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
   fetchRandomMaskUsageInstructions(context) {
     // if (!context.state.isMaskUsageImageFetched) {
     this.$axios({

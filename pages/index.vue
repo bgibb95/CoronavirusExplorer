@@ -206,7 +206,7 @@ export default {
       historyByCountryRecent: (state) => state.historyByCountry,
       historyByCountryFull: (state) => state.historyByCountryFull,
       historyByCountryLoading: (state) => state.historyByCountryLoading,
-      affectedCountries: (state) => state.countries.map((country) => country.name),
+      affectedCountries: (state) => state.affectedCountries.map((country) => (country ? country.name : null)),
       percentageChange: (state) => state.percentageChange,
       showAllHistory: (state) => state.showAllHistory
     })
